@@ -4,11 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.xangle.xpilot.batch.entity.block.BlockJpaEntity;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BlockJpaRepository extends JpaRepository<BlockJpaEntity, String> {
-
-    Optional<BlockJpaEntity> findTopByOrderByNumberDesc();
+public interface BlockJpaRepository extends JpaRepository<BlockJpaEntity, Long> {
 
     List<BlockJpaEntity> findAllByNumberAfter(Long number);
 }
