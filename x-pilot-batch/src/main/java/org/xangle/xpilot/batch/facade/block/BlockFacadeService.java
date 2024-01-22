@@ -1,4 +1,4 @@
-package org.xangle.xpilot.batch.facade;
+package org.xangle.xpilot.batch.facade.block;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class BlockTransactionFacade {
+public class BlockFacadeService {
 
     private final BlockService blockService;
     private final TransactionService transactionService;
@@ -22,10 +22,7 @@ public class BlockTransactionFacade {
 
     @Transactional
     public void save() {
-        Long lastBlockNumber = blockService.findLastBlock()
-                .map(BlockJpaEntity::getNumber)
-                .orElse(0L);
-
+        Long lastBlockNumber = blockService.findLastBlockNumber();
         List<BlockJpaEntity> blocks = blockService.findAllAfterBlockNumber(lastBlockNumber);
 
         blocks.forEach(block -> {
