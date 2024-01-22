@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      uri: ENC(qBRFh37iS/C69jtJgq6ez6wWsltwIS3943M6TU0CkQIJXgacgzAVOpfDMAeAbW9RL7gIETMpo5kOyEABz1X/LSb0zOI/S1O/LUjsRa3wT3U=)
+
+jasypt:
+  encryptor:
+    password: ${encrypt_key}
