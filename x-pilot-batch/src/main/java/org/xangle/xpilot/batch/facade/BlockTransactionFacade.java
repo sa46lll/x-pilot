@@ -5,11 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.xangle.xpilot.batch.entity.block.BlockJpaEntity;
-import org.xangle.xpilot.batch.entity.block.BlockMongoEntity;
-import org.xangle.xpilot.batch.entity.transaction.TransactionMongoEntity;
 import org.xangle.xpilot.batch.event.BlockTransactionSavedEvent;
-import org.xangle.xpilot.batch.mapper.BlockMongoEntityMapper;
-import org.xangle.xpilot.batch.mapper.TransactionMongoEntityMapper;
 import org.xangle.xpilot.batch.service.block.BlockService;
 import org.xangle.xpilot.batch.service.transaction.TransactionService;
 
@@ -30,18 +26,14 @@ public class BlockTransactionFacade {
                 .map(BlockJpaEntity::getNumber)
                 .orElse(0L);
 
-        List<BlockMongoEntity> blocks = blockService.findAllAfterBlockNumber(lastBlockNumber).stream()
-                .map(BlockMongoEntityMapper::toMongoEntity)
-                .toList();
+        List<BlockJpaEntity> blocks = blockService.findAllAfterBlockNumber(lastBlockNumber);
 
-        List<TransactionMongoEntity> transactions = transactionService.findAllAfterBlockNumber(lastBlockNumber).stream()
-                .map(TransactionMongoEntityMapper::toMongoEntity)
-                .toList();
-
-        blockService.saveAll(blocks);
-        transactionService.saveAll(transactions);
+        blocks.forEach(block -> {
+            blockService.save(block);
+            block.getTransactions().forEach(transactionService::save);
+        });
 
         applicationEventPublisher.publishEvent(
-                new BlockTransactionSavedEvent(LocalDateTime.now(), blocks.size(), transactions.size()));
+                new BlockTransactionSavedEvent(LocalDateTime.now(), blocks.size(), 0));
     }
 }

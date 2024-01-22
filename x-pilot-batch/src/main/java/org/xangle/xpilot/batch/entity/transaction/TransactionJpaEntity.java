@@ -1,11 +1,15 @@
 package org.xangle.xpilot.batch.entity.transaction;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.xangle.xpilot.batch.entity.block.BlockJpaEntity;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +24,9 @@ public class TransactionJpaEntity {
     private LocalDateTime blockTime;
     private String from;
     private String to;
-    private Long blockNumber;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "block_number")
+    private BlockJpaEntity blockNumber;
     private String blockHash;
     private Long gasPrice;
     private Long gasUsed;

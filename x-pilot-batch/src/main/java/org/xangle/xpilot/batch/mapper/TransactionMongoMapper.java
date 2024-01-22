@@ -3,12 +3,12 @@ package org.xangle.xpilot.batch.mapper;
 import org.xangle.xpilot.batch.entity.transaction.TransactionJpaEntity;
 import org.xangle.xpilot.batch.entity.transaction.TransactionMongoEntity;
 
-public class TransactionMongoEntityMapper {
+public class TransactionMongoMapper {
 
-    private TransactionMongoEntityMapper() {
+    private TransactionMongoMapper() {
     }
 
-    public static TransactionMongoEntity toMongoEntity(TransactionJpaEntity transactionJpaEntity) {
+    public static TransactionMongoEntity toEntity(TransactionJpaEntity transactionJpaEntity) {
         return new TransactionMongoEntity(
                 transactionJpaEntity.getHash(),
                 transactionJpaEntity.getBlockTime(),

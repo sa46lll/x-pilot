@@ -1,9 +1,11 @@
 package org.xangle.xpilot.batch.service.block;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.xangle.xpilot.batch.entity.block.BlockJpaEntity;
 import org.xangle.xpilot.batch.entity.block.BlockMongoEntity;
+import org.xangle.xpilot.batch.mapper.BlockMongoEntityMapper;
 import org.xangle.xpilot.batch.repository.block.BlockJpaRepository;
 import org.xangle.xpilot.batch.repository.block.BlockMongoRepository;
 
@@ -25,7 +27,7 @@ public class BlockService {
         return blockJpaRepository.findAllByNumberAfter(blockNumber);
     }
 
-    public void saveAll(List<BlockMongoEntity> blocks) {
-        blockMongoRepository.saveAll(blocks);
+    public void save(BlockJpaEntity block) {
+        blockMongoRepository.save(BlockMongoEntityMapper.toMongoEntity(block));
     }
 }

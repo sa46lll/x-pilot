@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface TransactionJpaRepository extends JpaRepository<TransactionJpaEntity, String> {
 
-    List<TransactionJpaEntity> findByBlockNumberGreaterThan(Long blockNumber);
-    List<TransactionJpaEntity> findAllByBlockNumberAfter(Long blockNumber);
 }

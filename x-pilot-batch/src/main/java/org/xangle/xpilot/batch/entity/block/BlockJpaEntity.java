@@ -1,13 +1,18 @@
 package org.xangle.xpilot.batch.entity.block;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.xangle.xpilot.batch.entity.transaction.TransactionJpaEntity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +27,6 @@ public class BlockJpaEntity {
     private String parentHash;
     private String miner;
     private int size;
+    @OneToMany(mappedBy = "blockNumber", fetch = FetchType.EAGER)
+    private List<TransactionJpaEntity> transactions = new ArrayList<>();
 }
