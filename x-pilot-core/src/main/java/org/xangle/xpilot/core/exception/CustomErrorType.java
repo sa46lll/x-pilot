@@ -8,6 +8,7 @@ public enum CustomErrorType implements ErrorType {
 
     SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR),
     BAD_REQUEST(HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED)
     ;
 
     private final HttpStatus httpStatus;

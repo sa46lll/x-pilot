@@ -6,3 +6,16 @@ spring:
 jasypt:
   encryptor:
     password: ${encrypt_key}
+
+jwt:
+  secret: ENC(zMPw7eJd1Zg4vQe5H9Zum3j+ndzs/1RqObZ2O+UTCjkPkI6rBcAn7+zdfKsP7KUH7hNvx1KZzoKTzQXnUZmkiCspy7Bzb0eguMnWQRRFHcaLhQFkC5S5Y7YevSZqk+3r36SMKvaFpgY=)
+  token-validity-in-seconds: 86400
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
