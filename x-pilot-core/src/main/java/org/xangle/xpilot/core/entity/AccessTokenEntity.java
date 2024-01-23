@@ -2,6 +2,7 @@ package org.xangle.xpilot.core.entity;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccessTokenEntity {
 
-    private static final int EXPIRED_TIME_IN_MINUTES = 5;
+    @Value("${jwt.access-token-validity-in-seconds}")
+    private static long accessTokenValidityInSeconds;
 
     @Id
     private String accessToken;
@@ -29,6 +31,6 @@ public class AccessTokenEntity {
     }
 
     public static LocalDateTime createExpiredTime() {
-        return LocalDateTime.now().plusMinutes(EXPIRED_TIME_IN_MINUTES);
+        return LocalDateTime.now().plusSeconds(accessTokenValidityInSeconds);
     }
 }
