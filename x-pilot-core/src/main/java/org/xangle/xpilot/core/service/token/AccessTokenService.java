@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.entity.AccessTokenEntity;
 import org.xangle.xpilot.core.entity.TokenBlackListEntity;
-import org.xangle.xpilot.core.repository.MongoAccessTokenRepository;
-import org.xangle.xpilot.core.repository.token.MongoTokenBlacklistRepository;
+import org.xangle.xpilot.core.repository.auth.MongoAccessTokenRepository;
+import org.xangle.xpilot.core.repository.auth.MongoTokenBlacklistRepository;
 
 import java.time.LocalDateTime;
 

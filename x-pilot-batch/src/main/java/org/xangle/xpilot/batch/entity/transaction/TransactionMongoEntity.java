@@ -1,17 +1,17 @@
 package org.xangle.xpilot.batch.entity.transaction;
 
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
-@Document("transactions")
+@Document("transaction")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TransactionMongoEntity {
 
-    @Id
+    @MongoId
     private String hash;
     private LocalDateTime blockTime;
     private String from;
