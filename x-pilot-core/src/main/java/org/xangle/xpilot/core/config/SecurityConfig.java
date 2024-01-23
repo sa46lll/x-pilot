@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .cors(withDefaults())
                 .authorizeHttpRequests(request -> request.requestMatchers(
-                                "/v1/worker/signup"
+                                "/v1/worker/signup",
+                                "/v1/worker/signin"
                         ).permitAll()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

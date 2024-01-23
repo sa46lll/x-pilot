@@ -22,4 +22,8 @@ public class WorkerService {
         }
         mongoWorkerRepository.save(WorkerEntityMapper.toEntity(signupRequest));
     }
+
+    public boolean existsByEmailAndPassword(String email, String password) {
+        return mongoWorkerRepository.existsWorkerEntityByEmailAndPassword(email, password);
+    }
 }

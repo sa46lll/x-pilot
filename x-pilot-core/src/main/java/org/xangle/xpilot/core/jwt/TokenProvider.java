@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.xangle.xpilot.core.model.response.TokenResponse;
 
 import java.security.Key;
 import java.util.Date;
@@ -37,18 +36,16 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenResponse createToken(Long memberId, String email) {
+    public String createToken(String email) {
         long now = (new Date()).getTime();
-
         Date tokenExpiresIn = new Date(now + this.tokenValidityInMilliseconds);
-        String accessToken = Jwts.builder()
+
+        return Jwts.builder()
                 .setSubject(email)
-                .claim("memberId", memberId)
+                .claim("email", email)
                 .setExpiration(tokenExpiresIn)
                 .signWith(this.key, SignatureAlgorithm.HS512)
                 .compact();
-
-        return new TokenResponse(memberId, accessToken);
     }
 
     public Authentication getAuthentication(String accessToken) {

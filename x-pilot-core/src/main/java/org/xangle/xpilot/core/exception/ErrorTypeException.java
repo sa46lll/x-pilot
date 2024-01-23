@@ -1,7 +1,5 @@
 package org.xangle.xpilot.core.exception;
 
-import lombok.Getter;
-
 public class ErrorTypeException extends RuntimeException {
 
     private final String message;
