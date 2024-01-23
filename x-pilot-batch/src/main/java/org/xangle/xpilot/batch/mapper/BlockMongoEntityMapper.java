@@ -16,7 +16,8 @@ public class BlockMongoEntityMapper {
                 ByteConverter.convertToString(blockJpaEntity.getHash()),
                 ByteConverter.convertToString(blockJpaEntity.getParentHash()),
                 ByteConverter.convertToString(blockJpaEntity.getMiner()),
-                blockJpaEntity.getSize()
+                blockJpaEntity.getSize(),
+                blockJpaEntity.getTransactions().size()
         );
     }
 }

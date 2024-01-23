@@ -4,12 +4,13 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@Document("workers")
+@Document("worker")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WorkerEntity {
 
-    @Id
+    @MongoId
     private String email;
     private String name;
     private String password;

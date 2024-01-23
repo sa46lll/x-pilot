@@ -9,7 +9,6 @@ import org.xangle.xpilot.batch.repository.block.BlockJpaRepository;
 import org.xangle.xpilot.batch.repository.block.BlockMongoRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ public class AccessTokenEntity {
     @Value("${jwt.access-token-validity-in-seconds}")
     private static long accessTokenValidityInSeconds;
 
-    @Id
+    @MongoId
     private String accessToken;
     private String email;
     private LocalDateTime expiredTime;

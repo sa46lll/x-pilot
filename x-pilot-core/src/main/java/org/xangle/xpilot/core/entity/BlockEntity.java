@@ -1,4 +1,4 @@
-package org.xangle.xpilot.batch.entity.block;
+package org.xangle.xpilot.core.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Document("block")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BlockMongoEntity {
+public class BlockEntity {
 
     @MongoId
     private Long number;
@@ -21,14 +21,4 @@ public class BlockMongoEntity {
     private String miner;
     private int size;
     private int transactionCount;
-
-    public BlockMongoEntity(Long number, LocalDateTime time, String hash, String parentHash, String miner, int size, int transactionCount) {
-        this.number = number;
-        this.time = time;
-        this.hash = hash;
-        this.parentHash = parentHash;
-        this.miner = miner;
-        this.size = size;
-        this.transactionCount = transactionCount;
-    }
 }
