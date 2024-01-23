@@ -37,16 +37,13 @@ public class SecurityConfig {
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .cors(withDefaults())
                 .authorizeHttpRequests(request -> request.requestMatchers(
-                                "/v1/worker/signup",
-                                "/v1/worker/signin"
+                                "/v1/auth/signup",
+                                "/v1/auth/login"
                         ).permitAll()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .exceptionHandling(handler -> handler.accessDeniedHandler(jwtAccessDeniedHandler))
-
-//                .httpBasic().disable()
-//                .formLogin().disable()
                 .build();
     }
 

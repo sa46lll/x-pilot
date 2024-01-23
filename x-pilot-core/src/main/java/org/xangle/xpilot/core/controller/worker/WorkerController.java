@@ -21,8 +21,6 @@ import org.xangle.xpilot.core.service.token.AccessTokenService;
 @RequestMapping("/v1/auth")
 public class WorkerController {
 
-    private static final String BEARER = "Bearer ";
-
     private final WorkerService workerService;
     private final WorkerFacadeService workerFacadeService;
     private final AccessTokenService accessTokenService;
@@ -38,8 +36,7 @@ public class WorkerController {
     }
 
     @PostMapping("/logout")
-    public void logout(@AuthenticationPrincipal final XPilotWorker xPilotWorker,
-                       @RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken) {
+    public void logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken) {
         accessTokenService.expire(bearerToken.substring(7));
     }
 }
