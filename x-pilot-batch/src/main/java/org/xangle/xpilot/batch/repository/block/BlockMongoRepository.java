@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface BlockMongoRepository extends MongoRepository<BlockMongoEntity, String> {
 
-    Optional<BlockJpaEntity> findTopByOrderByNumberDesc();
+    Optional<BlockMongoEntity> findTopByOrderByNumberDesc();
 }

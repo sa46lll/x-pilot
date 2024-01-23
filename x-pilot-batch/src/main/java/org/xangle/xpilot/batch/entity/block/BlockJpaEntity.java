@@ -23,9 +23,9 @@ public class BlockJpaEntity {
     @Id
     private Long number;
     private LocalDateTime time;
-    private String hash;
-    private String parentHash;
-    private String miner;
+    private byte[] hash;
+    private byte[] parentHash;
+    private byte[] miner;
     private int size;
     @OneToMany(mappedBy = "blockNumber", fetch = FetchType.EAGER)
     private List<TransactionJpaEntity> transactions = new ArrayList<>();

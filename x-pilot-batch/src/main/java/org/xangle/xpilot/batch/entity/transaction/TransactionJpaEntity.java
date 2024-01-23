@@ -20,14 +20,14 @@ import java.time.LocalDateTime;
 public class TransactionJpaEntity {
 
     @Id
-    private String hash;
+    private byte[] hash;
     private LocalDateTime blockTime;
-    private String from;
-    private String to;
+    private byte[] from;
+    private byte[] to;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "block_number")
     private BlockJpaEntity blockNumber;
-    private String blockHash;
+    private byte[] blockHash;
     private Long gasPrice;
     private Long gasUsed;
     private Long index;

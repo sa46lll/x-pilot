@@ -1,12 +1,14 @@
 package org.xangle.xpilot.batch.entity.block;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Document("block")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BlockMongoEntity {

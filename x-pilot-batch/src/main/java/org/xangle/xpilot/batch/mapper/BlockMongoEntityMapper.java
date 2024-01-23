@@ -1,5 +1,6 @@
 package org.xangle.xpilot.batch.mapper;
 
+import org.xangle.xpilot.batch.converter.ByteConverter;
 import org.xangle.xpilot.batch.entity.block.BlockJpaEntity;
 import org.xangle.xpilot.batch.entity.block.BlockMongoEntity;
 
@@ -12,9 +13,9 @@ public class BlockMongoEntityMapper {
         return new BlockMongoEntity(
                 blockJpaEntity.getNumber(),
                 blockJpaEntity.getTime(),
-                blockJpaEntity.getHash(),
-                blockJpaEntity.getParentHash(),
-                blockJpaEntity.getMiner(),
+                ByteConverter.convertToString(blockJpaEntity.getHash()),
+                ByteConverter.convertToString(blockJpaEntity.getParentHash()),
+                ByteConverter.convertToString(blockJpaEntity.getMiner()),
                 blockJpaEntity.getSize()
         );
     }
