@@ -8,6 +8,8 @@ import org.xangle.xpilot.core.entity.TokenBlackListEntity;
 import org.xangle.xpilot.core.repository.MongoAccessTokenRepository;
 import org.xangle.xpilot.core.repository.token.MongoTokenBlacklistRepository;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class AccessTokenService {
@@ -22,5 +24,13 @@ public class AccessTokenService {
     @Transactional
     public void expire(String accessToken) {
         mongoTokenBlacklistRepository.save(TokenBlackListEntity.createAccessToken(accessToken));
+    }
+
+    public boolean isExpired(String accessToken) {
+        return mongoTokenBlacklistRepository.existsTokenBlackListEntityByToken(accessToken);
+    }
+
+    public boolean exists(String accessToken) {
+        return mongoAccessTokenRepository.existsByAccessTokenAndExpiredTimeBefore(accessToken, LocalDateTime.now());
     }
 }

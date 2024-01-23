@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.xangle.xpilot.core.service.token.AccessTokenService;
 
 import java.security.Key;
 import java.util.Date;
@@ -24,12 +25,15 @@ public class TokenProvider {
 
     private final String secret;
     private final long accessTokenValidityInMilliseconds;
+    private final AccessTokenService accessTokenService;
     private Key key;
 
     public TokenProvider(@Value("${jwt.secret}") String secret,
-                         @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds) {
+                         @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds,
+                         final AccessTokenService accessTokenService) {
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds * 1000;
+        this.accessTokenService = accessTokenService;
     }
 
     @PostConstruct
@@ -81,9 +85,6 @@ public class TokenProvider {
     }
 
     public boolean validateAccessToken(String accessToken) {
-        if (!validateToken(accessToken)) {
-            return false;
-        }
-        return true; // blacklist check, accessToken check
+        return validateToken(accessToken) && accessTokenService.exists(accessToken) && !accessTokenService.isExpired(accessToken);
     }
 }
