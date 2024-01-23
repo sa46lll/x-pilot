@@ -8,13 +8,13 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
-public class XPilotMember implements UserDetails {
+public class XPilotWorker implements UserDetails {
 
-    private final Long memberId;
+    private final String email;
     private final List<GrantedAuthority> authorities;
 
-    public XPilotMember(Long memberId, List<GrantedAuthority> authorities) {
-        this.memberId = memberId;
+    public XPilotWorker(String email, List<GrantedAuthority> authorities) {
+        this.email = email;
         this.authorities = authorities;
     }
 

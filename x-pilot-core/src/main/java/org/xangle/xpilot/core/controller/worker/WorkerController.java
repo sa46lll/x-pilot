@@ -1,12 +1,14 @@
 package org.xangle.xpilot.core.controller.worker;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xangle.xpilot.core.facade.WorkerFacadeService;
-import org.xangle.xpilot.core.model.request.SigninRequest;
+import org.xangle.xpilot.core.jwt.XPilotWorker;
+import org.xangle.xpilot.core.model.request.LoginRequest;
 import org.xangle.xpilot.core.model.request.SignupRequest;
 import org.xangle.xpilot.core.model.response.TokenResponse;
 import org.xangle.xpilot.core.service.WorkerService;
@@ -24,8 +26,8 @@ public class WorkerController {
         workerService.signup(signupRequest);
     }
 
-    @PostMapping("/signin")
-    public TokenResponse login(@RequestBody final SigninRequest signinRequest) {
-        return workerFacadeService.signin(signinRequest);
+    @PostMapping("/login")
+    public TokenResponse login(@RequestBody final LoginRequest loginRequest) {
+        return workerFacadeService.login(loginRequest);
     }
 }

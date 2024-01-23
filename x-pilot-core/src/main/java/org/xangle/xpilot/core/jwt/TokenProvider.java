@@ -20,6 +20,8 @@ import java.util.List;
 @Component
 public class TokenProvider {
 
+    private static final String CLAIM_KEY_EMAIL = "email";
+
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
@@ -42,7 +44,7 @@ public class TokenProvider {
 
         return Jwts.builder()
                 .setSubject(email)
-                .claim("email", email)
+                .claim(CLAIM_KEY_EMAIL, email)
                 .setExpiration(tokenExpiresIn)
                 .signWith(this.key, SignatureAlgorithm.HS512)
                 .compact();
@@ -55,10 +57,10 @@ public class TokenProvider {
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody();
-        Integer memberId = (Integer) claims.get("memberId");
+        String email = (String) claims.get(CLAIM_KEY_EMAIL);
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        XPilotMember principal = new XPilotMember(Long.valueOf(memberId), authorities);
+        XPilotWorker principal = new XPilotWorker(email, authorities);
         return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 

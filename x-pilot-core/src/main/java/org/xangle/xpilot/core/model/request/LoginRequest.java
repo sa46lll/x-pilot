@@ -1,6 +1,6 @@
 package org.xangle.xpilot.core.model.request;
 
-public record SigninRequest(
+public record LoginRequest(
         String email,
         String password
 ) {
