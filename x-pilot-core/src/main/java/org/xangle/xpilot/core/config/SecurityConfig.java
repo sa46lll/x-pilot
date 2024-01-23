@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 "/v1/auth/signup",
                                 "/v1/auth/login"
                         ).permitAll()
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .exceptionHandling(handler -> handler.accessDeniedHandler(jwtAccessDeniedHandler))
