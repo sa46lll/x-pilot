@@ -37,11 +37,20 @@ public class CommentFacadeService {
                 ReplySaveDto.of(block.getNumber(), workerId, commentInfo.parentId(), commentInfo.content()));
     }
 
+    @Transactional
     public void update(final String workerId, final Long blockNumber, final String commentId, final CommentUpdateInfo commentUpdateInfo) {
         CommentEntity comment = commentService.findById(commentId);
         validate(comment, workerId, blockNumber);
 
         commentService.update(comment, commentUpdateInfo.content());
+    }
+
+    @Transactional
+    public void delete(String id, Long blockNumber, String commentId) {
+        CommentEntity comment = commentService.findById(commentId);
+        validate(comment, id, blockNumber);
+
+        commentService.delete(comment);
     }
 
     private void validate(final CommentEntity comment, final String workerId, final Long blockNumber) {

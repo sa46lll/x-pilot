@@ -2,6 +2,7 @@ package org.xangle.xpilot.core.controller.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +36,13 @@ public class CommentController {
                        @RequestBody final CommentUpdateInfo commentUpdateInfo) {
         commentFacadeService.update(
                 xPilotWorker.getId(), blockNumber, commentId, commentUpdateInfo);
+    }
+
+    @DeleteMapping("/{blockNumber}/comment/{commentId}")
+    public void delete(@AuthenticationPrincipal XPilotWorker xPilotWorker,
+                       @PathVariable final Long blockNumber,
+                       @PathVariable final String commentId) {
+        commentFacadeService.delete(
+                xPilotWorker.getId(), blockNumber, commentId);
     }
 }

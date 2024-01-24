@@ -17,10 +17,6 @@ public class CommentService {
 
     private final MongoCommentRepository mongoCommentRepository;
 
-    public void save(final CommentEntity commentEntity) {
-        mongoCommentRepository.save(commentEntity);
-    }
-
     public CommentEntity findById(final String commentId) {
         return mongoCommentRepository.findById(commentId)
                 .orElseThrow(() -> new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND));
@@ -54,8 +50,13 @@ public class CommentService {
     }
 
     @Transactional
-    public void update(final CommentEntity comment, String content) {
+    public void update(final CommentEntity comment, final String content) {
         comment.updateContent(content);
+        mongoCommentRepository.save(comment);
+    }
+
+    public void delete(final CommentEntity comment) {
+        comment.delete();
         mongoCommentRepository.save(comment);
     }
 }
