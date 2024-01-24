@@ -50,4 +50,8 @@ public class CommentEntity {
         this.depth = depth;
         this.content = content;
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

@@ -2,6 +2,7 @@ package org.xangle.xpilot.core.service.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.entity.CommentEntity;
 import org.xangle.xpilot.core.exception.CustomErrorType;
 import org.xangle.xpilot.core.exception.ErrorTypeException;
@@ -50,5 +51,11 @@ public class CommentService {
                         parent.getDepth() + 1,
                         replySaveDto.content())
         );
+    }
+
+    @Transactional
+    public void update(final CommentEntity comment, String content) {
+        comment.updateContent(content);
+        mongoCommentRepository.save(comment);
     }
 }

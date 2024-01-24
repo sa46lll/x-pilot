@@ -20,3 +20,5 @@ logging:
           mongodb:
             core:
               MongoTemplate: DEBUG
+            repository:
+              query: DEBUG

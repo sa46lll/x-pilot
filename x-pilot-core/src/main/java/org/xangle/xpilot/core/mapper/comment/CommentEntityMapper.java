@@ -1,9 +1,6 @@
 package org.xangle.xpilot.core.mapper.comment;
 
-import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.CommentEntity;
-import org.xangle.xpilot.core.model.CommentInfo;
-import org.xangle.xpilot.core.model.CommentSaveDto;
 
 public class CommentEntityMapper {
 

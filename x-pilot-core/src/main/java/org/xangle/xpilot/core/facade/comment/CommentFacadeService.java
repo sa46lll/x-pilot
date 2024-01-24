@@ -5,12 +5,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.aspect.annotation.Facade;
 import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.CommentEntity;
-import org.xangle.xpilot.core.mapper.comment.CommentEntityMapper;
+import org.xangle.xpilot.core.exception.CustomErrorType;
+import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.model.CommentInfo;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
+import org.xangle.xpilot.core.model.request.CommentUpdateInfo;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
+
+import java.util.Objects;
 
 @Facade
 @RequiredArgsConstructor
@@ -31,5 +35,18 @@ public class CommentFacadeService {
         }
         commentService.addReply(
                 ReplySaveDto.of(block.getNumber(), workerId, commentInfo.parentId(), commentInfo.content()));
+    }
+
+    public void update(final String workerId, final Long blockNumber, final String commentId, final CommentUpdateInfo commentUpdateInfo) {
+        CommentEntity comment = commentService.findById(commentId);
+        validate(comment, workerId, blockNumber);
+
+        commentService.update(comment, commentUpdateInfo.content());
+    }
+
+    private void validate(final CommentEntity comment, final String workerId, final Long blockNumber) {
+        if (!Objects.equals(comment.getWorkerId(), workerId) || !Objects.equals(comment.getBlockNumber(), blockNumber)) {
+            throw new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND);
+        }
     }
 }
