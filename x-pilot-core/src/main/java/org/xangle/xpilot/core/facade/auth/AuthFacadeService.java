@@ -1,6 +1,7 @@
 package org.xangle.xpilot.core.facade.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.aspect.annotation.Facade;
 import org.xangle.xpilot.core.entity.AccessTokenEntity;
 import org.xangle.xpilot.core.entity.WorkerEntity;
@@ -18,6 +19,7 @@ public class AuthFacadeService {
     private final WorkerService workerService;
     private final AccessTokenService accessTokenService;
 
+    @Transactional
     public TokenResponse login(final LoginRequest loginRequest) {
         WorkerEntity worker = workerService.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
         String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId());

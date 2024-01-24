@@ -22,15 +22,15 @@ public class AccessTokenService {
     }
 
     @Transactional
-    public void expire(String accessToken) {
+    public void expire(final String accessToken) {
         mongoTokenBlacklistRepository.save(TokenBlackListEntity.createAccessToken(accessToken));
     }
 
-    public boolean isExpired(String accessToken) {
-        return mongoTokenBlacklistRepository.existsTokenBlackListEntityByToken(accessToken);
+    public boolean exists(final String accessToken) {
+        return mongoAccessTokenRepository.existsByAccessTokenAndExpiredTimeBefore(accessToken, LocalDateTime.now());
     }
 
-    public boolean exists(String accessToken) {
-        return mongoAccessTokenRepository.existsByAccessTokenAndExpiredTimeBefore(accessToken, LocalDateTime.now());
+    public boolean isExpired(final String accessToken) {
+        return mongoTokenBlacklistRepository.existsTokenBlackListEntityByToken(accessToken);
     }
 }

@@ -21,6 +21,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     public static final String BEARER = "Bearer ";
+
     private final TokenProvider tokenProvider;
 
     @Override

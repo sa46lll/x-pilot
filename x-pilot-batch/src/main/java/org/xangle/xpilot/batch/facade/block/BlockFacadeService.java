@@ -21,7 +21,7 @@ public class BlockFacadeService {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
-    public void save() {
+    public void migrate() {
         Long lastBlockNumber = blockService.findLastBlockNumber();
         List<BlockJpaEntity> blocks = blockService.findAllAfterBlockNumber(lastBlockNumber);
 
@@ -31,6 +31,6 @@ public class BlockFacadeService {
         });
 
         applicationEventPublisher.publishEvent(
-                new BlockTransactionSavedEvent(LocalDateTime.now(), blocks.size(), 0));
+                new BlockTransactionSavedEvent(LocalDateTime.now(), blocks.size()));
     }
 }

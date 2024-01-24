@@ -13,6 +13,6 @@ public class BlockTransactionMigrationScheduler {
 
     @Scheduled(cron = "0/1 * * * * *")
     public void runBlockTransactionMigrationJob() {
-        blockFacadeService.save();
+        blockFacadeService.migrate();
     }
 }

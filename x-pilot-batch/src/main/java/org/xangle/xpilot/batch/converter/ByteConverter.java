@@ -7,7 +7,7 @@ public class ByteConverter {
     private ByteConverter() {
     }
 
-    public static String convertToString(byte[] bytes) {
+    public static String convertToString(final byte[] bytes) {
         return new String(bytes, StandardCharsets.US_ASCII);
     }
 }

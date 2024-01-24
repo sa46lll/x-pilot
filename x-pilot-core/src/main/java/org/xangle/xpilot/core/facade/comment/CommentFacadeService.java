@@ -46,7 +46,7 @@ public class CommentFacadeService {
     }
 
     @Transactional
-    public void delete(String id, Long blockNumber, String commentId) {
+    public void delete(final String id, final Long blockNumber, final String commentId) {
         CommentEntity comment = commentService.findById(commentId);
         validate(comment, id, blockNumber);
 

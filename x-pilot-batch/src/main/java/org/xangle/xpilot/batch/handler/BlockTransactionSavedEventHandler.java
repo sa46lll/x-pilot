@@ -19,8 +19,8 @@ public class BlockTransactionSavedEventHandler {
     public void handle(final BlockTransactionSavedEvent blockTransactionSavedEvent) {
         String executeTime = formatTime(blockTransactionSavedEvent.executionTime());
 
-        log.info("Batch executed at {}: Saved {} blocks and {} transactions.",
-                executeTime, blockTransactionSavedEvent.blockSize(), blockTransactionSavedEvent.transactionSize());
+        log.info("Scheduler executed at {}: Saved {} blocks.",
+                executeTime, blockTransactionSavedEvent.blockSize());
     }
 
     private String formatTime(LocalDateTime time) {

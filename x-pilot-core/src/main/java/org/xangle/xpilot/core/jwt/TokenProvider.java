@@ -42,7 +42,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(String email, String workerId) {
+    public String createToken(final String email, final String workerId) {
         long now = (new Date()).getTime();
         Date tokenExpiresIn = new Date(now + this.accessTokenValidityInMilliseconds);
 
@@ -54,7 +54,7 @@ public class TokenProvider {
                 .compact();
     }
 
-    public Authentication getAuthentication(String accessToken) {
+    public Authentication getAuthentication(final String accessToken) {
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -68,7 +68,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(final String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
@@ -84,7 +84,7 @@ public class TokenProvider {
         return false;
     }
 
-    public boolean validateAccessToken(String accessToken) {
+    public boolean validateAccessToken(final String accessToken) {
         return validateToken(accessToken) && accessTokenService.exists(accessToken) && !accessTokenService.isExpired(accessToken);
     }
 }
