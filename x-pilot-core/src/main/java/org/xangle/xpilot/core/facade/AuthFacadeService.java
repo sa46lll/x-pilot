@@ -12,15 +12,14 @@ import org.xangle.xpilot.core.service.token.AccessTokenService;
 
 @Facade
 @RequiredArgsConstructor
-public class WorkerFacadeService {
+public class AuthFacadeService {
 
     private final WorkerService workerService;
     private final AccessTokenService accessTokenService;
-    private final TokenProvider tokenProvider;
 
     public TokenResponse login(final LoginRequest loginRequest) {
         WorkerEntity worker = workerService.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
-        String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId().toHexString());
+        String accessToken = accessTokenService.create(loginRequest.email(), worker.getId().toHexString());
 
         accessTokenService.save(
                 AccessTokenEntity.of(accessToken));
