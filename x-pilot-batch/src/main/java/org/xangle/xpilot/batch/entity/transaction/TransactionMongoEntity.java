@@ -3,6 +3,7 @@ package org.xangle.xpilot.batch.entity.transaction;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
@@ -13,14 +14,32 @@ public class TransactionMongoEntity {
 
     @MongoId
     private String hash;
+
+    @Field("block_time")
     private LocalDateTime blockTime;
+
+    @Field("from")
     private String from;
+
+    @Field("to")
     private String to;
+
+    @Field("block_number")
     private Long blockNumber;
+
+    @Field("block_hash")
     private String blockHash;
+
+    @Field("gas_price")
     private Long gasPrice;
+
+    @Field("gas_used")
     private Long gasUsed;
+
+    @Field("transaction_fee")
     private Long transactionFee;
+
+    @Field("index")
     private Long index;
 
     public TransactionMongoEntity(String hash, LocalDateTime blockTime, String from, String to, Long blockNumber, String blockHash, Long gasPrice, Long gasUsed, Long transactionFee, Long index) {

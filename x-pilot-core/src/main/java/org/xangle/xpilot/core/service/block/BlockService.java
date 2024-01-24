@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.xangle.xpilot.core.entity.BlockEntity;
+import org.xangle.xpilot.core.exception.CustomErrorType;
+import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.model.request.BlockListInfo;
 import org.xangle.xpilot.core.model.response.BlockListResponse;
 import org.xangle.xpilot.core.model.response.GlobalPageResponse;
@@ -36,5 +38,10 @@ public class BlockService {
                 page.getTotalElements(),
                 blocks
         );
+    }
+
+    public BlockEntity findByNumber(final Long number) {
+        return mongoBlockRepository.findByNumber(number)
+                .orElseThrow(() -> new ErrorTypeException("해당 블록이 존재하지 않습니다.", CustomErrorType.BLOCK_NOT_FOUND));
     }
 }

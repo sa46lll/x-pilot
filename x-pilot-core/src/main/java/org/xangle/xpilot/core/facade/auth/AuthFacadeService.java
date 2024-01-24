@@ -1,4 +1,4 @@
-package org.xangle.xpilot.core.facade;
+package org.xangle.xpilot.core.facade.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.xangle.xpilot.core.aspect.annotation.Facade;
@@ -14,12 +14,13 @@ import org.xangle.xpilot.core.service.token.AccessTokenService;
 @RequiredArgsConstructor
 public class AuthFacadeService {
 
+    private final TokenProvider tokenProvider;
     private final WorkerService workerService;
     private final AccessTokenService accessTokenService;
 
     public TokenResponse login(final LoginRequest loginRequest) {
         WorkerEntity worker = workerService.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
-        String accessToken = accessTokenService.create(loginRequest.email(), worker.getId().toHexString());
+        String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId());
 
         accessTokenService.save(
                 AccessTokenEntity.of(accessToken));

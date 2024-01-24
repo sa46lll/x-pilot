@@ -2,10 +2,9 @@ package org.xangle.xpilot.core.entity;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
@@ -19,6 +18,8 @@ public class AccessTokenEntity {
 
     @MongoId
     private String accessToken;
+
+    @Field("expired_time")
     private LocalDateTime expiredTime;
 
     public AccessTokenEntity(String accessToken, LocalDateTime expiredTime) {

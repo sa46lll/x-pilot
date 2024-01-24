@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.xangle.xpilot.core.facade.AuthFacadeService;
+import org.xangle.xpilot.core.facade.auth.AuthFacadeService;
 import org.xangle.xpilot.core.model.request.LoginRequest;
 import org.xangle.xpilot.core.model.request.SignupRequest;
 import org.xangle.xpilot.core.model.response.TokenResponse;

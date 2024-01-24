@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,8 @@ public class TokenBlackListEntity {
 
     @MongoId
     private String token;
+
+    @Field("expired_time")
     private LocalDateTime expiredTime;
 
     public TokenBlackListEntity(String token, LocalDateTime expiredTime) {

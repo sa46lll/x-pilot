@@ -1,5 +1,6 @@
 package org.xangle.xpilot.core.repository.worker;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.xangle.xpilot.core.entity.WorkerEntity;
 
