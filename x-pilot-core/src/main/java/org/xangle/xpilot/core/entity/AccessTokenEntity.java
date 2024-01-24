@@ -2,6 +2,7 @@ package org.xangle.xpilot.core.entity;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,17 +19,15 @@ public class AccessTokenEntity {
 
     @MongoId
     private String accessToken;
-    private String email;
     private LocalDateTime expiredTime;
 
-    public AccessTokenEntity(String accessToken, String email, LocalDateTime expiredTime) {
+    public AccessTokenEntity(String accessToken, LocalDateTime expiredTime) {
         this.accessToken = accessToken;
-        this.email = email;
         this.expiredTime = expiredTime;
     }
 
-    public static AccessTokenEntity of(String accessToken, String email) {
-        return new AccessTokenEntity(accessToken, email, createExpiredTime());
+    public static AccessTokenEntity of(String accessToken) {
+        return new AccessTokenEntity(accessToken, createExpiredTime());
     }
 
     public static LocalDateTime createExpiredTime() {

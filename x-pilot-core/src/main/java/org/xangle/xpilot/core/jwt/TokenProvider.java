@@ -21,7 +21,7 @@ import java.util.List;
 @Component
 public class TokenProvider {
 
-    private static final String CLAIM_KEY_EMAIL = "email";
+    private static final String CLAIM_KEY_WORKER_ID = "workerId";
 
     private final String secret;
     private final long accessTokenValidityInMilliseconds;
@@ -42,13 +42,13 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(String email) {
+    public String createToken(String email, String workerId) {
         long now = (new Date()).getTime();
         Date tokenExpiresIn = new Date(now + this.accessTokenValidityInMilliseconds);
 
         return Jwts.builder()
                 .setSubject(email)
-                .claim(CLAIM_KEY_EMAIL, email)
+                .claim(CLAIM_KEY_WORKER_ID, workerId)
                 .setExpiration(tokenExpiresIn)
                 .signWith(this.key, SignatureAlgorithm.HS512)
                 .compact();
@@ -61,10 +61,10 @@ public class TokenProvider {
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody();
-        String email = (String) claims.get(CLAIM_KEY_EMAIL);
+        String id = (String) claims.get(CLAIM_KEY_WORKER_ID);
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        XPilotWorker principal = new XPilotWorker(email, authorities);
+        XPilotWorker principal = new XPilotWorker(id, authorities);
         return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 

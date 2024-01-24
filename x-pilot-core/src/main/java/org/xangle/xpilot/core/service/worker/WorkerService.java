@@ -1,8 +1,9 @@
-package org.xangle.xpilot.core.service;
+package org.xangle.xpilot.core.service.worker;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.xangle.xpilot.core.entity.WorkerEntity;
 import org.xangle.xpilot.core.exception.CustomErrorType;
 import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.mapper.worker.WorkerEntityMapper;
@@ -23,7 +24,8 @@ public class WorkerService {
         mongoWorkerRepository.save(WorkerEntityMapper.toEntity(signupRequest));
     }
 
-    public boolean existsByEmailAndPassword(String email, String password) {
-        return mongoWorkerRepository.existsWorkerEntityByEmailAndPassword(email, password);
+    public WorkerEntity findByEmailAndPassword(String email, String password) {
+        return mongoWorkerRepository.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new ErrorTypeException("이메일 또는 비밀번호가 일치하지 않습니다.", CustomErrorType.SERVER_ERROR));
     }
 }

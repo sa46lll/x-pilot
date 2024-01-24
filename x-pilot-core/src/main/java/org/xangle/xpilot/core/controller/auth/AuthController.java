@@ -11,7 +11,7 @@ import org.xangle.xpilot.core.facade.WorkerFacadeService;
 import org.xangle.xpilot.core.model.request.LoginRequest;
 import org.xangle.xpilot.core.model.request.SignupRequest;
 import org.xangle.xpilot.core.model.response.TokenResponse;
-import org.xangle.xpilot.core.service.WorkerService;
+import org.xangle.xpilot.core.service.worker.WorkerService;
 import org.xangle.xpilot.core.service.token.AccessTokenService;
 
 @RestController

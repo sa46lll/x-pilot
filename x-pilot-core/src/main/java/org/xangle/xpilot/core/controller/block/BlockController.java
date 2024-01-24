@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.model.request.BlockListInfo;
 import org.xangle.xpilot.core.model.response.BlockListResponse;
 import org.xangle.xpilot.core.model.response.GlobalPageResponse;
