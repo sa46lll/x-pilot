@@ -26,7 +26,7 @@ public class CommentController {
                      @PathVariable final Long blockNumber,
                      @RequestBody final CommentInfo commentInfo) {
         commentFacadeService.save(
-                xPilotWorker.getId(), blockNumber, commentInfo);
+                xPilotWorker.getWorkerId(), blockNumber, commentInfo);
     }
 
     @PatchMapping("/{blockNumber}/comment/{commentId}")
@@ -35,7 +35,7 @@ public class CommentController {
                        @PathVariable final String commentId,
                        @RequestBody final CommentUpdateInfo commentUpdateInfo) {
         commentFacadeService.update(
-                xPilotWorker.getId(), blockNumber, commentId, commentUpdateInfo);
+                xPilotWorker.getWorkerId(), blockNumber, commentId, commentUpdateInfo);
     }
 
     @DeleteMapping("/{blockNumber}/comment/{commentId}")
@@ -43,6 +43,6 @@ public class CommentController {
                        @PathVariable final Long blockNumber,
                        @PathVariable final String commentId) {
         commentFacadeService.delete(
-                xPilotWorker.getId(), blockNumber, commentId);
+                xPilotWorker.getWorkerId(), blockNumber, commentId);
     }
 }

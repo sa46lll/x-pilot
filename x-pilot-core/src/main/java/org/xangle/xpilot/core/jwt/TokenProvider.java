@@ -61,10 +61,10 @@ public class TokenProvider {
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody();
-        String id = (String) claims.get(CLAIM_KEY_WORKER_ID);
+        String workerId = (String) claims.get(CLAIM_KEY_WORKER_ID);
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        XPilotWorker principal = new XPilotWorker(id, authorities);
+        XPilotWorker principal = new XPilotWorker(workerId, authorities);
         return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 

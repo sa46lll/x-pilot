@@ -10,11 +10,11 @@ import java.util.List;
 @Getter
 public class XPilotWorker implements UserDetails {
 
-    private final String id;
+    private final String workerId;
     private final List<GrantedAuthority> authorities;
 
-    public XPilotWorker(String id, List<GrantedAuthority> authorities) {
-        this.id = id;
+    public XPilotWorker(String workerId, List<GrantedAuthority> authorities) {
+        this.workerId = workerId;
         this.authorities = authorities;
     }
 
