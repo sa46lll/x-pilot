@@ -3,6 +3,8 @@ package org.xangle.xpilot.core.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -24,6 +26,14 @@ public class WorkerEntity {
 
     @Field("password")
     private String password;
+
+    @CreatedDate
+    @Field("created_time")
+    private Long createdTime;
+
+    @LastModifiedDate
+    @Field("updated_time")
+    private Long updatedTime;
 
     public WorkerEntity(String email, String name, String password) {
         this.email = email;
