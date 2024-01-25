@@ -55,17 +55,21 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String accessToken) {
+        String workerId = getWorkerId(accessToken);
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
+        XPilotWorker principal = new XPilotWorker(workerId, authorities);
+        return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
+    }
+
+    public String getWorkerId(String accessToken) {
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody();
-        String workerId = (String) claims.get(CLAIM_KEY_WORKER_ID);
-
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        XPilotWorker principal = new XPilotWorker(workerId, authorities);
-        return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
+        return (String) claims.get(CLAIM_KEY_WORKER_ID);
     }
 
     public boolean validateToken(String token) {

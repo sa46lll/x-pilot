@@ -10,6 +10,7 @@ import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.model.CommentInfo;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
+import org.xangle.xpilot.core.model.ContextHandler;
 import org.xangle.xpilot.core.model.request.CommentUpdateInfo;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
@@ -24,8 +25,9 @@ public class CommentFacadeService {
     private final CommentService commentService;
 
     @Transactional
-    public void save(String workerId, Long blockNumber, CommentInfo commentInfo) {
+    public void save(Long blockNumber, CommentInfo commentInfo) {
         BlockEntity block = blockService.findByNumber(blockNumber);
+        String workerId = ContextHandler.getWorkerId();
 
         boolean isRoot = commentInfo.parentId().isBlank();
 
@@ -39,17 +41,17 @@ public class CommentFacadeService {
     }
 
     @Transactional
-    public void update(String workerId, Long blockNumber, String commentId, CommentUpdateInfo commentUpdateInfo) {
+    public void update(Long blockNumber, String commentId, CommentUpdateInfo commentUpdateInfo) {
         CommentEntity comment = commentService.findById(commentId);
-        validate(comment, workerId, blockNumber);
+        validate(comment, ContextHandler.getWorkerId(), blockNumber);
 
         commentService.update(comment, commentUpdateInfo.content());
     }
 
     @Transactional
-    public void delete(String id, Long blockNumber, String commentId) {
+    public void delete(Long blockNumber, String commentId) {
         CommentEntity comment = commentService.findById(commentId);
-        validate(comment, id, blockNumber);
+        validate(comment, ContextHandler.getWorkerId(), blockNumber);
 
         commentService.delete(comment);
     }
