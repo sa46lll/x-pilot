@@ -12,12 +12,12 @@ public record BlockDetailResponse(
         int txCount,
         String miner,
         List<TransactionResponse> transactions,
-        GlobalPageResponse<CommentResponse> comments
+        GlobalPageResponse<CommentListResponse> comments
 ) {
 
     public static BlockDetailResponse of(BlockEntity block,
                                          List<TransactionResponse> transactions,
-                                         GlobalPageResponse<CommentResponse> comments) {
+                                         GlobalPageResponse<CommentListResponse> comments) {
         return new BlockDetailResponse(
                 block.getNumber(),
                 Duration.between(block.getTime(), LocalDateTime.now()).getSeconds(),

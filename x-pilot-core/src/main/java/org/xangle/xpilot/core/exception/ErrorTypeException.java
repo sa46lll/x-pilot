@@ -6,6 +6,7 @@ public class ErrorTypeException extends RuntimeException {
     private final ErrorType errorType;
 
     public ErrorTypeException(String message, ErrorType errorType) {
+        super(message);
         this.message = message;
         this.errorType = errorType;
     }

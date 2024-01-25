@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Document("worker")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,11 +31,11 @@ public class WorkerEntity {
 
     @CreatedDate
     @Field("created_time")
-    private Long createdTime;
+    private LocalDateTime createdTime;
 
     @LastModifiedDate
     @Field("updated_time")
-    private Long updatedTime;
+    private LocalDateTime updatedTime;
 
     public WorkerEntity(String email, String name, String password) {
         this.email = email;

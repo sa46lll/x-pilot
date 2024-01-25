@@ -1,5 +1,6 @@
 package org.xangle.xpilot.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Document("comment")
@@ -41,11 +44,11 @@ public class CommentEntity {
 
     @CreatedDate
     @Field("created_time")
-    private Long createdTime;
+    private LocalDateTime createdTime;
 
     @LastModifiedDate
     @Field("updated_time")
-    private Long updatedTime;
+    private LocalDateTime updatedTime;
 
     public CommentEntity(Long blockNumber, String workerId, String rootId, String parentId, Long depth, String content) {
         this.blockNumber = blockNumber;
