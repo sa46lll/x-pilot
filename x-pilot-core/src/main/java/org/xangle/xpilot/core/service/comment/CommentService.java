@@ -1,6 +1,9 @@
 package org.xangle.xpilot.core.service.comment;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.entity.CommentEntity;
@@ -9,6 +12,9 @@ import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.mapper.comment.CommentEntityMapper;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
+import org.xangle.xpilot.core.model.request.BlockDetailInfo;
+import org.xangle.xpilot.core.model.response.CommentResponse;
+import org.xangle.xpilot.core.model.response.GlobalPageResponse;
 import org.xangle.xpilot.core.repository.comment.MongoCommentRepository;
 
 @Service
@@ -58,5 +64,9 @@ public class CommentService {
     public void delete(CommentEntity comment) {
         comment.delete();
         mongoCommentRepository.save(comment);
+    }
+
+    public GlobalPageResponse<CommentResponse> findAllByBlockNumber(Long blockNumber, BlockDetailInfo blockDetailInfo) {
+        return null;
     }
 }

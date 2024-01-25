@@ -27,7 +27,7 @@ public class AccessTokenEntity {
         this.expiredTime = expiredTime;
     }
 
-    public static AccessTokenEntity of(String accessToken) {
+    public static AccessTokenEntity from(String accessToken) {
         return new AccessTokenEntity(accessToken, createExpiredTime());
     }
 

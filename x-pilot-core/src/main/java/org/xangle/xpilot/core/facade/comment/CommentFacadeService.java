@@ -28,7 +28,6 @@ public class CommentFacadeService {
     public void save(Long blockNumber, CommentInfo commentInfo) {
         BlockEntity block = blockService.findByNumber(blockNumber);
         String workerId = ContextHandler.getWorkerId();
-
         boolean isRoot = commentInfo.parentId().isBlank();
 
         if (isRoot) {

@@ -25,7 +25,7 @@ public class AuthFacadeService {
         String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId());
 
         accessTokenService.save(
-                AccessTokenEntity.of(accessToken));
+                AccessTokenEntity.from(accessToken));
 
         return TokenResponse.of(loginRequest.email(), accessToken);
     }
