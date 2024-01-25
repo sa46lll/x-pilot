@@ -20,7 +20,7 @@ public class AuthFacadeService {
     private final AccessTokenService accessTokenService;
 
     @Transactional
-    public TokenResponse login(final LoginRequest loginRequest) {
+    public TokenResponse login(LoginRequest loginRequest) {
         WorkerEntity worker = workerService.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
         String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId());
 

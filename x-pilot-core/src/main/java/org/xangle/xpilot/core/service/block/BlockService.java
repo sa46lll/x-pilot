@@ -22,7 +22,7 @@ public class BlockService {
 
     private final MongoBlockRepository mongoBlockRepository;
 
-    public GlobalPageResponse<BlockListResponse> findAll(final BlockListInfo blockListInfo) {
+    public GlobalPageResponse<BlockListResponse> findAll(BlockListInfo blockListInfo) {
         Pageable pageable = PageRequest.of(blockListInfo.page(), blockListInfo.size(), Sort.unsorted());
 
         Page<BlockEntity> page = mongoBlockRepository.findAll(pageable);
@@ -40,7 +40,7 @@ public class BlockService {
         );
     }
 
-    public BlockEntity findByNumber(final Long number) {
+    public BlockEntity findByNumber(Long number) {
         return mongoBlockRepository.findByNumber(number)
                 .orElseThrow(() -> new ErrorTypeException("해당 블록이 존재하지 않습니다.", CustomErrorType.BLOCK_NOT_FOUND));
     }

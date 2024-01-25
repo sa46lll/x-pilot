@@ -46,7 +46,7 @@ public class CommentEntity {
         this.content = content;
     }
 
-    public void updateContent(final String content) {
+    public void updateContent(String content) {
         this.content = content;
     }
 

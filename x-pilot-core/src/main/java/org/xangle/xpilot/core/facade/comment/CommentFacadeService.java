@@ -24,8 +24,9 @@ public class CommentFacadeService {
     private final CommentService commentService;
 
     @Transactional
-    public void save(final String workerId, final Long blockNumber, final CommentInfo commentInfo) {
+    public void save(String workerId, Long blockNumber, CommentInfo commentInfo) {
         BlockEntity block = blockService.findByNumber(blockNumber);
+
         boolean isRoot = commentInfo.parentId().isBlank();
 
         if (isRoot) {
@@ -38,7 +39,7 @@ public class CommentFacadeService {
     }
 
     @Transactional
-    public void update(final String workerId, final Long blockNumber, final String commentId, final CommentUpdateInfo commentUpdateInfo) {
+    public void update(String workerId, Long blockNumber, String commentId, CommentUpdateInfo commentUpdateInfo) {
         CommentEntity comment = commentService.findById(commentId);
         validate(comment, workerId, blockNumber);
 
@@ -46,14 +47,14 @@ public class CommentFacadeService {
     }
 
     @Transactional
-    public void delete(final String id, final Long blockNumber, final String commentId) {
+    public void delete(String id, Long blockNumber, String commentId) {
         CommentEntity comment = commentService.findById(commentId);
         validate(comment, id, blockNumber);
 
         commentService.delete(comment);
     }
 
-    private void validate(final CommentEntity comment, final String workerId, final Long blockNumber) {
+    private void validate(CommentEntity comment, String workerId, Long blockNumber) {
         if (!Objects.equals(comment.getWorkerId(), workerId) || !Objects.equals(comment.getBlockNumber(), blockNumber)) {
             throw new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND);
         }

@@ -24,12 +24,12 @@ public class AuthController {
     private final AccessTokenService accessTokenService;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody final SignupRequest signupRequest) {
+    public void signup(@RequestBody SignupRequest signupRequest) {
         workerService.signup(signupRequest);
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody final LoginRequest loginRequest) {
+    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
         return authFacadeService.login(loginRequest);
     }
 

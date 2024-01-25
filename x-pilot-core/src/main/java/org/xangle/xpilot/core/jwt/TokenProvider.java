@@ -30,7 +30,7 @@ public class TokenProvider {
 
     public TokenProvider(@Value("${jwt.secret}") String secret,
                          @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds,
-                         final AccessTokenService accessTokenService) {
+                         AccessTokenService accessTokenService) {
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds * 1000;
         this.accessTokenService = accessTokenService;
@@ -42,7 +42,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(final String email, final String workerId) {
+    public String createToken(String email, String workerId) {
         long now = (new Date()).getTime();
         Date tokenExpiresIn = new Date(now + this.accessTokenValidityInMilliseconds);
 
@@ -54,7 +54,7 @@ public class TokenProvider {
                 .compact();
     }
 
-    public Authentication getAuthentication(final String accessToken) {
+    public Authentication getAuthentication(String accessToken) {
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -68,7 +68,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 
-    public boolean validateToken(final String token) {
+    public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
@@ -84,7 +84,7 @@ public class TokenProvider {
         return false;
     }
 
-    public boolean validateAccessToken(final String accessToken) {
+    public boolean validateAccessToken(String accessToken) {
         return validateToken(accessToken) && accessTokenService.exists(accessToken) && !accessTokenService.isExpired(accessToken);
     }
 }

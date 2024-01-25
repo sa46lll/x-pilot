@@ -16,7 +16,7 @@ public class BlockTransactionSavedEventHandler {
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handle(final BlockTransactionSavedEvent blockTransactionSavedEvent) {
+    public void handle(BlockTransactionSavedEvent blockTransactionSavedEvent) {
         String executeTime = formatTime(blockTransactionSavedEvent.executionTime());
 
         log.info("Scheduler executed at {}: Saved {} blocks.",

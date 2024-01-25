@@ -6,10 +6,10 @@ public record ReplySaveDto(
         String parentId,
         String content
 ) {
-    public static ReplySaveDto of(final Long blockNumber,
-                                  final String workerId,
-                                  final String parentId,
-                                  final String content) {
+    public static ReplySaveDto of(Long blockNumber,
+                                  String workerId,
+                                  String parentId,
+                                  String content) {
         return new ReplySaveDto(blockNumber, workerId, parentId, content);
     }
 }

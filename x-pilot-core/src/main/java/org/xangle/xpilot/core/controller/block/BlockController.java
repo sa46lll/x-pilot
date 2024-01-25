@@ -18,7 +18,7 @@ public class BlockController {
     private final BlockService blockService;
 
     @GetMapping("/list")
-    public GlobalPageResponse<BlockListResponse> findAll(@RequestBody final BlockListInfo blockListInfo) {
+    public GlobalPageResponse<BlockListResponse> findAll(@RequestBody BlockListInfo blockListInfo) {
         return blockService.findAll(blockListInfo);
     }
 }

@@ -17,7 +17,7 @@ public class WorkerService {
     private final MongoWorkerRepository mongoWorkerRepository;
 
     @Transactional
-    public void signup(final SignupRequest signupRequest) {
+    public void signup(SignupRequest signupRequest) {
         if (mongoWorkerRepository.existsWorkerEntityByEmail(signupRequest.email())) {
             throw new ErrorTypeException("이미 존재하는 이메일입니다.", CustomErrorType.SERVER_ERROR);
         }

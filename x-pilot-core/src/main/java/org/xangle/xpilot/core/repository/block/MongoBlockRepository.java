@@ -8,7 +8,7 @@ import org.xangle.xpilot.core.entity.BlockEntity;
 import java.util.Optional;
 
 public interface MongoBlockRepository extends MongoRepository<BlockEntity, String> {
-    Page<BlockEntity> findAll(final Pageable pageable);
+    Page<BlockEntity> findAll(Pageable pageable);
 
     Optional<BlockEntity> findByNumber(Long number);
 }

@@ -2,6 +2,7 @@ package org.xangle.xpilot.batch.service.block;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.batch.entity.block.BlockJpaEntity;
 import org.xangle.xpilot.batch.entity.block.BlockMongoEntity;
 import org.xangle.xpilot.batch.mapper.BlockMongoEntityMapper;
@@ -27,6 +28,7 @@ public class BlockService {
         return blockJpaRepository.findAllByNumberAfter(blockNumber);
     }
 
+    @Transactional
     public void save(BlockJpaEntity block) {
         blockMongoRepository.save(BlockMongoEntityMapper.toMongoEntity(block));
     }

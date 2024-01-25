@@ -8,7 +8,7 @@ public class WorkerEntityMapper {
     private WorkerEntityMapper() {
     }
 
-    public static WorkerEntity toEntity(final SignupRequest signupRequest) {
+    public static WorkerEntity toEntity(SignupRequest signupRequest) {
         return new WorkerEntity(
                 signupRequest.email(),
                 signupRequest.name(),

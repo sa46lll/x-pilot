@@ -17,12 +17,12 @@ public class CommentService {
 
     private final MongoCommentRepository mongoCommentRepository;
 
-    public CommentEntity findById(final String commentId) {
+    public CommentEntity findById(String commentId) {
         return mongoCommentRepository.findById(commentId)
                 .orElseThrow(() -> new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND));
     }
 
-    public void addComment(final CommentSaveDto commentSaveDto) {
+    public void addComment(CommentSaveDto commentSaveDto) {
         mongoCommentRepository.save(
                 CommentEntityMapper.toEntity(
                         commentSaveDto.workerId(),
@@ -34,7 +34,7 @@ public class CommentService {
         );
     }
 
-    public void addReply(final ReplySaveDto replySaveDto) {
+    public void addReply(ReplySaveDto replySaveDto) {
         CommentEntity parent = findById(replySaveDto.parentId());
         String rootId = parent.getRootId().isBlank() ? parent.getId() : parent.getRootId();
 
@@ -50,12 +50,12 @@ public class CommentService {
     }
 
     @Transactional
-    public void update(final CommentEntity comment, final String content) {
+    public void update(CommentEntity comment, String content) {
         comment.updateContent(content);
         mongoCommentRepository.save(comment);
     }
 
-    public void delete(final CommentEntity comment) {
+    public void delete(CommentEntity comment) {
         comment.delete();
         mongoCommentRepository.save(comment);
     }

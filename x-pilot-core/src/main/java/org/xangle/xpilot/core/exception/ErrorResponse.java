@@ -1,24 +1,23 @@
 package org.xangle.xpilot.core.exception;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public record ErrorResponse(
         LocalDateTime timestamp,
         int status,
         String error,
-        String trace,
         String message,
-        String path
+        String trace
 ) {
 
-    public static ErrorResponse of(String customMessage, ErrorType errorType) {
+    public static ErrorResponse of(Exception e, ErrorType errorType, String customMessage) {
         return new ErrorResponse(
                 LocalDateTime.now(),
                 errorType.getStatus(),
                 errorType.getError(),
-                null,
                 customMessage,
-                null
+                Arrays.toString(e.getStackTrace())
         );
     }
 }
