@@ -10,13 +10,15 @@ import org.xangle.xpilot.scheduler.event.BlockTransactionSavedEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.lang.Thread.sleep;
+
 @Slf4j
 @Component
 public class BlockTransactionSavedEventHandler {
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handle(BlockTransactionSavedEvent blockTransactionSavedEvent) {
+    public void handle(BlockTransactionSavedEvent blockTransactionSavedEvent) throws InterruptedException {
         String executeTime = formatTime(blockTransactionSavedEvent.executionTime());
 
         log.info("Scheduler executed at {}: Saved {} blocks.",
