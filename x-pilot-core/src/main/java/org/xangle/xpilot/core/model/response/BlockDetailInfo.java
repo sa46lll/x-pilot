@@ -1,14 +1,13 @@
 package org.xangle.xpilot.core.model.response;
 
 import org.xangle.xpilot.core.entity.BlockEntity;
+import org.xangle.xpilot.core.service.DateUtilService;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record BlockDetailInfo(
         Long blockNumber,
-        long ageInSeconds,
+        String age,
         int txCount,
         String miner,
         List<TransactionInfo> transactions,
@@ -20,7 +19,7 @@ public record BlockDetailInfo(
                                      PageableInfo<CommentListInfo> comments) {
         return new BlockDetailInfo(
                 block.getNumber(),
-                Duration.between(block.getTime(), LocalDateTime.now()).getSeconds(),
+                DateUtilService.getAge(block.getTime()),
                 block.getTransactionCount(),
                 block.getMiner(),
                 transactions,
