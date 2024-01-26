@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Document("transaction")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,7 +16,7 @@ public class TransactionMongoEntity {
     private String hash;
 
     @Field("block_time")
-    private LocalDateTime blockTime;
+    private Instant blockTime;
 
     @Field("from")
     private String from;
@@ -42,7 +42,7 @@ public class TransactionMongoEntity {
     @Field("index")
     private Long index;
 
-    public TransactionMongoEntity(String hash, LocalDateTime blockTime, String from, String to, Long blockNumber, String blockHash, Long gasPrice, Long gasUsed, Long transactionFee, Long index) {
+    public TransactionMongoEntity(String hash, Instant blockTime, String from, String to, Long blockNumber, String blockHash, Long gasPrice, Long gasUsed, Long transactionFee, Long index) {
         this.hash = hash;
         this.blockTime = blockTime;
         this.from = from;

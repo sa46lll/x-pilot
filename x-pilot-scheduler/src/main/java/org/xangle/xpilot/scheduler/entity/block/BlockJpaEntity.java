@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.xangle.xpilot.scheduler.entity.transaction.TransactionJpaEntity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class BlockJpaEntity {
 
     @Id
     private Long number;
-    private LocalDateTime time;
+    private Instant time;
     private byte[] hash;
     private byte[] parentHash;
     private byte[] miner;

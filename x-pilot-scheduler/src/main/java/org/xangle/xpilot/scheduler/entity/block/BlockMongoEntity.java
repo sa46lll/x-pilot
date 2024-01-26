@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Document("block")
@@ -18,7 +18,7 @@ public class BlockMongoEntity {
     private Long number;
 
     @Field("time")
-    private LocalDateTime time;
+    private Instant time;
 
     @Field("hash")
     private String hash;
@@ -35,7 +35,7 @@ public class BlockMongoEntity {
     @Field("transaction_count")
     private int transactionCount;
 
-    public BlockMongoEntity(Long number, LocalDateTime time, String hash, String parentHash, String miner, int size, int transactionCount) {
+    public BlockMongoEntity(Long number, Instant time, String hash, String parentHash, String miner, int size, int transactionCount) {
         this.number = number;
         this.time = time;
         this.hash = hash;

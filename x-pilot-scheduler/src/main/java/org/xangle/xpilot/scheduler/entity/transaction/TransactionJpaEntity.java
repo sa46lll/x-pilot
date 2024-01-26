@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.xangle.xpilot.scheduler.entity.block.BlockJpaEntity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -21,7 +21,7 @@ public class TransactionJpaEntity {
 
     @Id
     private byte[] hash;
-    private LocalDateTime blockTime;
+    private Instant blockTime;
     private byte[] from;
     private byte[] to;
     @ManyToOne(fetch = FetchType.LAZY)
