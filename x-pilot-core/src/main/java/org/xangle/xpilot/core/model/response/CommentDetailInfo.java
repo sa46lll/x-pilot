@@ -3,13 +3,13 @@ package org.xangle.xpilot.core.model.response;
 import org.xangle.xpilot.core.entity.CommentEntity;
 import org.xangle.xpilot.core.model.ContextHandler;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 public record CommentDetailInfo(
         String workerId,
         String content,
-        LocalDateTime createTime,
+        Instant createTime,
         boolean canModify,
         boolean isDeleted
 ) {

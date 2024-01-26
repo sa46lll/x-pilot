@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Document("block")
@@ -18,7 +18,7 @@ public class BlockEntity {
     private Long number;
 
     @Field("time")
-    private LocalDateTime time;
+    private Instant time;
 
     @Field("hash")
     private String hash;

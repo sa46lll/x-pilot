@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.xangle.xpilot.core.service.DateUtilService;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Document("token_blacklist")
@@ -22,14 +23,14 @@ public class TokenBlackListEntity {
     private String token;
 
     @Field("expired_time")
-    private LocalDateTime expiredTime;
+    private Instant expiredTime;
 
-    public TokenBlackListEntity(String token, LocalDateTime expiredTime) {
+    public TokenBlackListEntity(String token, Instant expiredTime) {
         this.token = token;
         this.expiredTime = expiredTime;
     }
 
     public static TokenBlackListEntity createAccessToken(String token) {
-        return new TokenBlackListEntity(token, LocalDateTime.now().plusSeconds(accessTokenValidityInSeconds));
+        return new TokenBlackListEntity(token, DateUtilService.now());
     }
 }

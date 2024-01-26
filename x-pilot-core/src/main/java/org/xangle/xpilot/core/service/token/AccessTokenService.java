@@ -7,8 +7,7 @@ import org.xangle.xpilot.core.entity.AccessTokenEntity;
 import org.xangle.xpilot.core.entity.TokenBlackListEntity;
 import org.xangle.xpilot.core.repository.auth.MongoAccessTokenRepository;
 import org.xangle.xpilot.core.repository.auth.MongoTokenBlacklistRepository;
-
-import java.time.LocalDateTime;
+import org.xangle.xpilot.core.service.DateUtilService;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class AccessTokenService {
     }
 
     public boolean exists(String accessToken) {
-        return mongoAccessTokenRepository.existsByAccessTokenAndExpiredTimeBefore(accessToken, LocalDateTime.now());
+        return mongoAccessTokenRepository.existsByAccessTokenAndExpiredTimeBefore(accessToken, DateUtilService.now());
     }
 
     public boolean isExpired(String accessToken) {

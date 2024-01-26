@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Document("worker")
@@ -31,11 +31,11 @@ public class WorkerEntity {
 
     @CreatedDate
     @Field("created_time")
-    private LocalDateTime createdTime;
+    private Instant createdTime;
 
     @LastModifiedDate
     @Field("updated_time")
-    private LocalDateTime updatedTime;
+    private Instant updatedTime;
 
     public WorkerEntity(String email, String name, String password) {
         this.email = email;

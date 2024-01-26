@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Document("transaction")
@@ -17,7 +17,7 @@ public class TransactionEntity {
     private String hash;
 
     @Field("block_time")
-    private LocalDateTime blockTime;
+    private Instant blockTime;
 
     @Field("from")
     private String from;
@@ -42,17 +42,4 @@ public class TransactionEntity {
 
     @Field("index")
     private Long index;
-
-    public TransactionEntity(String hash, LocalDateTime blockTime, String from, String to, Long blockNumber, String blockHash, Long gasPrice, Long gasUsed, Long transactionFee, Long index) {
-        this.hash = hash;
-        this.blockTime = blockTime;
-        this.from = from;
-        this.to = to;
-        this.blockNumber = blockNumber;
-        this.blockHash = blockHash;
-        this.gasPrice = gasPrice;
-        this.gasUsed = gasUsed;
-        this.transactionFee = transactionFee;
-        this.index = index;
-    }
 }
