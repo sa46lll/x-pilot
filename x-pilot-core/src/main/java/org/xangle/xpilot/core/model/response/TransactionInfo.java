@@ -5,15 +5,15 @@ import org.xangle.xpilot.core.entity.TransactionEntity;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public record TransactionResponse(
+public record TransactionInfo(
         String transactionHash,
         long ageInSeconds,
         String from,
         String to,
         Long transactionFee
 ) {
-    public static TransactionResponse from(TransactionEntity transactionEntity) {
-        return new TransactionResponse(
+    public static TransactionInfo from(TransactionEntity transactionEntity) {
+        return new TransactionInfo(
                 transactionEntity.getHash(),
                 Duration.between(transactionEntity.getBlockTime(), LocalDateTime.now()).getSeconds(),
                 transactionEntity.getFrom(),

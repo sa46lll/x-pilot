@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xangle.xpilot.core.facade.auth.AuthFacadeService;
 import org.xangle.xpilot.core.model.request.LoginRequest;
 import org.xangle.xpilot.core.model.request.SignupRequest;
-import org.xangle.xpilot.core.model.response.TokenResponse;
+import org.xangle.xpilot.core.model.response.AccessTokenInfo;
 import org.xangle.xpilot.core.service.worker.WorkerService;
 import org.xangle.xpilot.core.service.token.AccessTokenService;
 
@@ -29,7 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
+    public AccessTokenInfo login(@RequestBody LoginRequest loginRequest) {
         return authFacadeService.login(loginRequest);
     }
 

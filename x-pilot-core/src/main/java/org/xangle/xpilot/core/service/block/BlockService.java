@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.exception.CustomErrorType;
 import org.xangle.xpilot.core.exception.ErrorTypeException;
-import org.xangle.xpilot.core.model.request.BlockListInfo;
-import org.xangle.xpilot.core.model.response.BlockListResponse;
-import org.xangle.xpilot.core.model.response.GlobalPageResponse;
+import org.xangle.xpilot.core.model.request.BlockListRequest;
+import org.xangle.xpilot.core.model.response.BlockListInfo;
+import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.repository.block.MongoBlockRepository;
 
 import java.util.List;
@@ -22,16 +22,16 @@ public class BlockService {
 
     private final MongoBlockRepository mongoBlockRepository;
 
-    public GlobalPageResponse<BlockListResponse> findAll(BlockListInfo blockListInfo) {
-        Pageable pageable = PageRequest.of(blockListInfo.page(), blockListInfo.size(), Sort.unsorted());
+    public PageableInfo<BlockListInfo> findAll(BlockListRequest blockListRequest) {
+        Pageable pageable = PageRequest.of(blockListRequest.page(), blockListRequest.size(), Sort.unsorted());
 
         Page<BlockEntity> page = mongoBlockRepository.findAll(pageable);
 
-        List<BlockListResponse> blocks = page.getContent().stream()
-                .map(BlockListResponse::from)
+        List<BlockListInfo> blocks = page.getContent().stream()
+                .map(BlockListInfo::from)
                 .toList();
 
-        return GlobalPageResponse.of(
+        return PageableInfo.of(
                 page.getNumber(),
                 page.getSize(),
                 page.getTotalPages(),

@@ -1,6 +1,6 @@
 package org.xangle.xpilot.core.model.request;
 
-public record BlockDetailInfo(
+public record BlockListRequest(
         int page,
         int size
 ) {

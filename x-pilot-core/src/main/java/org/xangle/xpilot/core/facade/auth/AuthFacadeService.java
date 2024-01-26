@@ -7,7 +7,7 @@ import org.xangle.xpilot.core.entity.AccessTokenEntity;
 import org.xangle.xpilot.core.entity.WorkerEntity;
 import org.xangle.xpilot.core.jwt.TokenProvider;
 import org.xangle.xpilot.core.model.request.LoginRequest;
-import org.xangle.xpilot.core.model.response.TokenResponse;
+import org.xangle.xpilot.core.model.response.AccessTokenInfo;
 import org.xangle.xpilot.core.service.worker.WorkerService;
 import org.xangle.xpilot.core.service.token.AccessTokenService;
 
@@ -20,13 +20,13 @@ public class AuthFacadeService {
     private final AccessTokenService accessTokenService;
 
     @Transactional
-    public TokenResponse login(LoginRequest loginRequest) {
+    public AccessTokenInfo login(LoginRequest loginRequest) {
         WorkerEntity worker = workerService.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
         String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId());
 
         accessTokenService.save(
                 AccessTokenEntity.from(accessToken));
 
-        return TokenResponse.of(loginRequest.email(), accessToken);
+        return AccessTokenInfo.of(loginRequest.email(), accessToken);
     }
 }

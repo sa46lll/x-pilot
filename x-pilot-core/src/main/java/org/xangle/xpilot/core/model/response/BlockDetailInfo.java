@@ -6,19 +6,19 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record BlockDetailResponse(
+public record BlockDetailInfo(
         Long blockNumber,
         long ageInSeconds,
         int txCount,
         String miner,
-        List<TransactionResponse> transactions,
-        GlobalPageResponse<CommentListResponse> comments
+        List<TransactionInfo> transactions,
+        PageableInfo<CommentListInfo> comments
 ) {
 
-    public static BlockDetailResponse of(BlockEntity block,
-                                         List<TransactionResponse> transactions,
-                                         GlobalPageResponse<CommentListResponse> comments) {
-        return new BlockDetailResponse(
+    public static BlockDetailInfo of(BlockEntity block,
+                                     List<TransactionInfo> transactions,
+                                     PageableInfo<CommentListInfo> comments) {
+        return new BlockDetailInfo(
                 block.getNumber(),
                 Duration.between(block.getTime(), LocalDateTime.now()).getSeconds(),
                 block.getTransactionCount(),

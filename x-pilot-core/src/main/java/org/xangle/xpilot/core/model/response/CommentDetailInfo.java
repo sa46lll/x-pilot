@@ -6,15 +6,15 @@ import org.xangle.xpilot.core.model.ContextHandler;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public record CommentResponse(
+public record CommentDetailInfo(
         String workerId,
         String content,
         LocalDateTime createTime,
         boolean canModify,
         boolean isDeleted
 ) {
-    public static CommentResponse of(CommentEntity commentEntity) {
-        return new CommentResponse(
+    public static CommentDetailInfo of(CommentEntity commentEntity) {
+        return new CommentDetailInfo(
                 commentEntity.getWorkerId(),
                 commentEntity.getContent(),
                 commentEntity.getCreatedTime(),

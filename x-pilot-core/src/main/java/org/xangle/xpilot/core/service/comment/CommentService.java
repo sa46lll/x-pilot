@@ -12,9 +12,9 @@ import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.mapper.comment.CommentEntityMapper;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
-import org.xangle.xpilot.core.model.request.BlockDetailInfo;
-import org.xangle.xpilot.core.model.response.CommentListResponse;
-import org.xangle.xpilot.core.model.response.GlobalPageResponse;
+import org.xangle.xpilot.core.model.request.BlockDetailRequest;
+import org.xangle.xpilot.core.model.response.CommentListInfo;
+import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.repository.comment.MongoCommentRepository;
 
 import java.util.List;
@@ -73,8 +73,8 @@ public class CommentService {
         mongoCommentRepository.save(comment);
     }
 
-    public GlobalPageResponse<CommentListResponse> findAllByBlockNumber(Long blockNumber, BlockDetailInfo blockDetailInfo) {
-        Pageable pageable = PageRequest.of(blockDetailInfo.page(), blockDetailInfo.size());
+    public PageableInfo<CommentListInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
+        Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
         Page<CommentEntity> roots = mongoCommentRepository.findAllByBlockNumberAndDepth(blockNumber, 0L, pageable);
 
         List<String> rootIds = roots.stream()
@@ -98,11 +98,11 @@ public class CommentService {
                         Entry::getValue
                 ));
 
-        List<CommentListResponse> response = groupByRootComment.entrySet().stream()
-                .map(entry -> CommentListResponse.of(entry.getKey(), entry.getValue()))
+        List<CommentListInfo> response = groupByRootComment.entrySet().stream()
+                .map(entry -> CommentListInfo.of(entry.getKey(), entry.getValue()))
                 .toList();
 
-        return GlobalPageResponse.of(
+        return PageableInfo.of(
                 roots.getNumber(),
                 roots.getSize(),
                 roots.getTotalPages(),

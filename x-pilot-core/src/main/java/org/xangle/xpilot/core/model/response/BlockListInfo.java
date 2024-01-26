@@ -5,14 +5,14 @@ import org.xangle.xpilot.core.entity.BlockEntity;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public record BlockListResponse(
+public record BlockListInfo(
         Long blockNumber,
         long ageInSeconds,
         int txCount,
         String miner
 ) {
-    public static BlockListResponse from(BlockEntity blockEntity) {
-        return new BlockListResponse(
+    public static BlockListInfo from(BlockEntity blockEntity) {
+        return new BlockListInfo(
                 blockEntity.getNumber(),
                 Duration.between(blockEntity.getTime(), LocalDateTime.now()).getSeconds(),
                 blockEntity.getTransactionCount(),

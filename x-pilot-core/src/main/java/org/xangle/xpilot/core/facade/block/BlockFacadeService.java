@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.xangle.xpilot.core.aspect.annotation.Facade;
 import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.TransactionEntity;
-import org.xangle.xpilot.core.model.request.BlockDetailInfo;
-import org.xangle.xpilot.core.model.response.BlockDetailResponse;
-import org.xangle.xpilot.core.model.response.CommentListResponse;
-import org.xangle.xpilot.core.model.response.GlobalPageResponse;
-import org.xangle.xpilot.core.model.response.TransactionResponse;
+import org.xangle.xpilot.core.model.request.BlockDetailRequest;
+import org.xangle.xpilot.core.model.response.BlockDetailInfo;
+import org.xangle.xpilot.core.model.response.CommentListInfo;
+import org.xangle.xpilot.core.model.response.PageableInfo;
+import org.xangle.xpilot.core.model.response.TransactionInfo;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
 import org.xangle.xpilot.core.service.transaction.TransactionService;
@@ -23,15 +23,15 @@ public class BlockFacadeService {
     private final CommentService commentService;
     private final TransactionService transactionService;
 
-    public BlockDetailResponse findByBlockNumber(Long blockNumber, BlockDetailInfo blockDetailInfo) {
-        BlockEntity block = blockService.findByNumber(blockNumber);
-        List<TransactionEntity> transactions = transactionService.findAllByBlockNumber(blockNumber);
-        GlobalPageResponse<CommentListResponse> comments = commentService.findAllByBlockNumber(blockNumber, blockDetailInfo);
+    public BlockDetailInfo findByBlockNumber(BlockDetailRequest blockDetailRequest) {
+        BlockEntity block = blockService.findByNumber(blockDetailRequest.blockNumber());
+        List<TransactionEntity> transactions = transactionService.findAllByBlockNumber(block.getNumber());
+        PageableInfo<CommentListInfo> comments = commentService.findAllByBlockNumber(block.getNumber(), blockDetailRequest);
 
-        List<TransactionResponse> transactionResponse = transactions.stream()
-                .map(TransactionResponse::from)
+        List<TransactionInfo> transactionInfo = transactions.stream()
+                .map(TransactionInfo::from)
                 .toList();
 
-        return BlockDetailResponse.of(block, transactionResponse, comments);
+        return BlockDetailInfo.of(block, transactionInfo, comments);
     }
 }
