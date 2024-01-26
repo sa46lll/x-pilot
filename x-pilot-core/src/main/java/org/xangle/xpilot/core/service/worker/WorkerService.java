@@ -1,6 +1,7 @@
 package org.xangle.xpilot.core.service.worker;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.entity.WorkerEntity;
@@ -14,6 +15,7 @@ import org.xangle.xpilot.core.repository.worker.MongoWorkerRepository;
 @RequiredArgsConstructor
 public class WorkerService {
 
+    private final PasswordEncoder passwordEncoder;
     private final MongoWorkerRepository mongoWorkerRepository;
 
     @Transactional
@@ -21,7 +23,11 @@ public class WorkerService {
         if (mongoWorkerRepository.existsWorkerEntityByEmail(signupRequest.email())) {
             throw new ErrorTypeException("이미 존재하는 이메일입니다.", CustomErrorType.SERVER_ERROR);
         }
-        mongoWorkerRepository.save(WorkerEntityMapper.toEntity(signupRequest));
+
+        WorkerEntity worker = WorkerEntityMapper.toEntity(signupRequest);
+        worker.encryptPassword(passwordEncoder.encode(signupRequest.password()));
+
+        mongoWorkerRepository.save(worker);
     }
 
     public WorkerEntity findByEmailAndPassword(String email, String password) {

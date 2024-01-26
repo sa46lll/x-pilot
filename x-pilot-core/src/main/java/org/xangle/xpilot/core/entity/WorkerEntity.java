@@ -42,4 +42,8 @@ public class WorkerEntity {
         this.name = name;
         this.password = password;
     }
+
+    public void encryptPassword(String password) {
+        this.password = password;
+    }
 }
