@@ -12,7 +12,3 @@ spring:
 jasypt:
   encryptor:
     password: jasyptEncryptorPassword
-
-jwt:
-  secret: springtestsecretspringtestsecretspringtestsecret
-  access-token-validity-in-seconds: 86400 # TODO: 24 hours
