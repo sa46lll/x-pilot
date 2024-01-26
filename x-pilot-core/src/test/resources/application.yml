@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:xpilot-core
+    username: sa46lll
+    password:
+
+  h2:
+    console:
+      enabled: true
+
+jasypt:
+  encryptor:
+    password: jasyptEncryptorPassword
+
+jwt:
+  secret: springtestsecretspringtestsecretspringtestsecret
+  access-token-validity-in-seconds: 86400 # TODO: 24 hours
