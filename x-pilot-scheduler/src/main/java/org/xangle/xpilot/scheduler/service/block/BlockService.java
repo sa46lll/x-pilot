@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.scheduler.entity.block.BlockJpaEntity;
 import org.xangle.xpilot.scheduler.entity.block.BlockMongoEntity;
-import org.xangle.xpilot.scheduler.mapper.BlockMongoEntityMapper;
 import org.xangle.xpilot.scheduler.repository.block.BlockJpaRepository;
 import org.xangle.xpilot.scheduler.repository.block.BlockMongoRepository;
+import org.xangle.xpilot.scheduler.service.ByteConverterService;
 
 import java.util.List;
 
@@ -31,6 +31,15 @@ public class BlockService {
 
     @Transactional
     public void save(BlockJpaEntity block) {
-        blockMongoRepository.save(BlockMongoEntityMapper.toMongoEntity(block));
+        blockMongoRepository.save(
+                new BlockMongoEntity(
+                        block.getNumber(),
+                        block.getTime(),
+                        ByteConverterService.convertToString(block.getHash()),
+                        ByteConverterService.convertToString(block.getParentHash()),
+                        ByteConverterService.convertToString(block.getMiner()),
+                        block.getSize(),
+                        block.getTransactions().size()
+                ));
     }
 }

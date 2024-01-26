@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Document("transaction")
@@ -37,12 +38,12 @@ public class TransactionMongoEntity {
     private Long gasUsed;
 
     @Field("transaction_fee")
-    private Long transactionFee;
+    private BigDecimal transactionFee;
 
     @Field("index")
     private Long index;
 
-    public TransactionMongoEntity(String hash, Instant blockTime, String from, String to, Long blockNumber, String blockHash, Long gasPrice, Long gasUsed, Long transactionFee, Long index) {
+    public TransactionMongoEntity(String hash, Instant blockTime, String from, String to, Long blockNumber, String blockHash, Long gasPrice, Long gasUsed, BigDecimal transactionFee, Long index) {
         this.hash = hash;
         this.blockTime = blockTime;
         this.from = from;
