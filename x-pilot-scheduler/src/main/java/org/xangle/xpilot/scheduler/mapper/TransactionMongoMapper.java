@@ -1,6 +1,6 @@
 package org.xangle.xpilot.scheduler.mapper;
 
-import org.xangle.xpilot.scheduler.converter.ByteConverter;
+import org.xangle.xpilot.scheduler.service.ByteConverterService;
 import org.xangle.xpilot.scheduler.entity.transaction.TransactionJpaEntity;
 import org.xangle.xpilot.scheduler.entity.transaction.TransactionMongoEntity;
 
@@ -11,12 +11,12 @@ public class TransactionMongoMapper {
 
     public static TransactionMongoEntity toEntity(TransactionJpaEntity transactionJpaEntity) {
         return new TransactionMongoEntity(
-                ByteConverter.convertToString(transactionJpaEntity.getHash()),
+                ByteConverterService.convertToString(transactionJpaEntity.getHash()),
                 transactionJpaEntity.getBlockTime(),
-                ByteConverter.convertToString(transactionJpaEntity.getFrom()),
-                ByteConverter.convertToString(transactionJpaEntity.getTo()),
+                ByteConverterService.convertToString(transactionJpaEntity.getFrom()),
+                ByteConverterService.convertToString(transactionJpaEntity.getTo()),
                 transactionJpaEntity.getBlockNumber().getNumber(),
-                ByteConverter.convertToString(transactionJpaEntity.getBlockHash()),
+                ByteConverterService.convertToString(transactionJpaEntity.getBlockHash()),
                 transactionJpaEntity.getGasPrice(),
                 transactionJpaEntity.getGasUsed(),
                 transactionJpaEntity.getGasPrice() * transactionJpaEntity.getGasUsed(),

@@ -1,6 +1,6 @@
 package org.xangle.xpilot.scheduler.mapper;
 
-import org.xangle.xpilot.scheduler.converter.ByteConverter;
+import org.xangle.xpilot.scheduler.service.ByteConverterService;
 import org.xangle.xpilot.scheduler.entity.block.BlockJpaEntity;
 import org.xangle.xpilot.scheduler.entity.block.BlockMongoEntity;
 
@@ -13,9 +13,9 @@ public class BlockMongoEntityMapper {
         return new BlockMongoEntity(
                 blockJpaEntity.getNumber(),
                 blockJpaEntity.getTime(),
-                ByteConverter.convertToString(blockJpaEntity.getHash()),
-                ByteConverter.convertToString(blockJpaEntity.getParentHash()),
-                ByteConverter.convertToString(blockJpaEntity.getMiner()),
+                ByteConverterService.convertToString(blockJpaEntity.getHash()),
+                ByteConverterService.convertToString(blockJpaEntity.getParentHash()),
+                ByteConverterService.convertToString(blockJpaEntity.getMiner()),
                 blockJpaEntity.getSize(),
                 blockJpaEntity.getTransactions().size()
         );

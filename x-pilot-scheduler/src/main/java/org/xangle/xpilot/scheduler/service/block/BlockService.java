@@ -24,6 +24,7 @@ public class BlockService {
                 .orElse(-1L);
     }
 
+    @Transactional(readOnly = true)
     public List<BlockJpaEntity> findAllAfterBlockNumber(Long blockNumber) {
         return blockJpaRepository.findAllByNumberAfter(blockNumber);
     }

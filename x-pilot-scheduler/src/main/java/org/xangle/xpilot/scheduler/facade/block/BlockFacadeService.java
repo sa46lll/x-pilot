@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.xangle.xpilot.scheduler.entity.block.BlockJpaEntity;
-import org.xangle.xpilot.scheduler.event.BlockTransactionSavedEvent;
+import org.xangle.xpilot.scheduler.model.event.BlockTransactionSavedEvent;
 import org.xangle.xpilot.scheduler.service.block.BlockService;
 import org.xangle.xpilot.scheduler.service.transaction.TransactionService;
 

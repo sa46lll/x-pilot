@@ -5,12 +5,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
-import org.xangle.xpilot.scheduler.event.BlockTransactionSavedEvent;
+import org.xangle.xpilot.scheduler.model.event.BlockTransactionSavedEvent;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import static java.lang.Thread.sleep;
 
 @Slf4j
 @Component

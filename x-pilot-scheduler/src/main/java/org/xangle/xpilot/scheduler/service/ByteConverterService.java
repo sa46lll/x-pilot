@@ -1,10 +1,10 @@
-package org.xangle.xpilot.scheduler.converter;
+package org.xangle.xpilot.scheduler.service;
 
 import java.nio.charset.StandardCharsets;
 
-public class ByteConverter {
+public class ByteConverterService {
 
-    private ByteConverter() {
+    private ByteConverterService() {
     }
 
     public static String convertToString(byte[] bytes) {

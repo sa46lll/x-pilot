@@ -1,4 +1,4 @@
-package org.xangle.xpilot.scheduler.event;
+package org.xangle.xpilot.scheduler.model.event;
 
 import java.time.LocalDateTime;
 
