@@ -1,5 +1,6 @@
 package org.xangle.xpilot.core.controller.comment;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,14 +22,14 @@ public class CommentController {
 
     @PostMapping("/{blockNumber}/comment")
     public void save(@PathVariable Long blockNumber,
-                     @RequestBody CommentRequest commentRequest) {
+                     @RequestBody @Valid CommentRequest commentRequest) {
         commentFacadeService.save(blockNumber, commentRequest);
     }
 
     @PatchMapping("/{blockNumber}/comment/{commentId}")
     public void update(@PathVariable Long blockNumber,
                        @PathVariable String commentId,
-                       @RequestBody CommentUpdateRequest commentUpdateRequest) {
+                       @RequestBody @Valid CommentUpdateRequest commentUpdateRequest) {
         commentFacadeService.update(blockNumber, commentId, commentUpdateRequest);
     }
 

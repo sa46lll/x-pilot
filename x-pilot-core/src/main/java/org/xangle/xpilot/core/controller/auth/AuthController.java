@@ -1,5 +1,6 @@
 package org.xangle.xpilot.core.controller.auth;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,12 +25,12 @@ public class AuthController {
     private final AccessTokenService accessTokenService;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody SignupRequest signupRequest) {
+    public void signup(@RequestBody @Valid SignupRequest signupRequest) {
         workerService.signup(signupRequest);
     }
 
     @PostMapping("/login")
-    public AccessTokenInfo login(@RequestBody LoginRequest loginRequest) {
+    public AccessTokenInfo login(@RequestBody @Valid LoginRequest loginRequest) {
         return authFacadeService.login(loginRequest);
     }
 
