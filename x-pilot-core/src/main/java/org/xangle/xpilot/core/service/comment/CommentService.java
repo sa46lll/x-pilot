@@ -33,20 +33,21 @@ public class CommentService {
                 .orElseThrow(() -> new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND));
     }
 
-    public void addComment(CommentSaveDto commentSaveDto) {
-        mongoCommentRepository.save(
-                CommentEntityMapper.toEntity(
-                        commentSaveDto.workerId(),
-                        commentSaveDto.blockNumber(),
-                        "",
-                        "",
-                        0L,
-                        1L,
-                        commentSaveDto.content())
-        );
+    public CommentEntity addComment(CommentSaveDto commentSaveDto) {
+        CommentEntity comment = CommentEntityMapper.toEntity(
+                commentSaveDto.workerId(),
+                commentSaveDto.blockNumber(),
+                "",
+                "",
+                0L,
+                1L,
+                commentSaveDto.content());
+        mongoCommentRepository.save(comment);
+
+        return comment;
     }
 
-    public void addReply(ReplySaveDto replySaveDto) {
+    public CommentEntity addReply(ReplySaveDto replySaveDto) {
         CommentEntity parent = findById(replySaveDto.parentId());
         Long lastSequence = mongoCommentRepository.findFirstByParentIdOrderBySequenceDesc(replySaveDto.parentId())
                 .map(CommentEntity::getSequence)
@@ -54,16 +55,18 @@ public class CommentService {
 
         String rootId = parent.getRootId().isBlank() ? parent.getId() : parent.getRootId();
 
-        mongoCommentRepository.save(
-                CommentEntityMapper.toEntity(
-                        replySaveDto.workerId(),
-                        replySaveDto.blockNumber(),
-                        rootId,
-                        replySaveDto.parentId(),
-                        parent.getDepth() + 1L,
-                        lastSequence + 1L,
-                        replySaveDto.content())
-        );
+        CommentEntity reply = CommentEntityMapper.toEntity(
+                replySaveDto.workerId(),
+                replySaveDto.blockNumber(),
+                rootId,
+                replySaveDto.parentId(),
+                parent.getDepth() + 1L,
+                lastSequence + 1L,
+                replySaveDto.content());
+
+        mongoCommentRepository.save(reply);
+
+        return reply;
     }
 
     @Transactional

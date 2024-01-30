@@ -12,6 +12,7 @@ import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
 import org.xangle.xpilot.core.model.ContextHandler;
 import org.xangle.xpilot.core.model.request.CommentUpdateRequest;
+import org.xangle.xpilot.core.model.response.CommentInfo;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
 
@@ -25,18 +26,16 @@ public class CommentFacadeService {
     private final CommentService commentService;
 
     @Transactional
-    public void save(Long blockNumber, CommentRequest commentRequest) {
+    public CommentInfo save(Long blockNumber, CommentRequest commentRequest) {
         BlockEntity block = blockService.findByNumber(blockNumber);
         String workerId = ContextHandler.getWorkerId();
         boolean isRoot = commentRequest.parentId().isBlank();
 
-        if (isRoot) {
-            commentService.addComment(
-                    CommentSaveDto.of(block.getNumber(), workerId, commentRequest.content()));
-            return;
-        }
-        commentService.addReply(
-                ReplySaveDto.of(block.getNumber(), workerId, commentRequest.parentId(), commentRequest.content()));
+        CommentEntity comment = isRoot ?
+                commentService.addComment(CommentSaveDto.of(block.getNumber(), workerId, commentRequest.content())) :
+                commentService.addReply(ReplySaveDto.of(block.getNumber(), workerId, commentRequest.parentId(), commentRequest.content()));
+
+        return CommentInfo.from(comment);
     }
 
     @Transactional

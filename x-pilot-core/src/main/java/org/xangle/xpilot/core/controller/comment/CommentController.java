@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xangle.xpilot.core.facade.comment.CommentFacadeService;
 import org.xangle.xpilot.core.model.request.CommentRequest;
 import org.xangle.xpilot.core.model.request.CommentUpdateRequest;
+import org.xangle.xpilot.core.model.response.CommentInfo;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +22,9 @@ public class CommentController {
     private final CommentFacadeService commentFacadeService;
 
     @PostMapping("/{blockNumber}/comment")
-    public void save(@PathVariable Long blockNumber,
-                     @RequestBody @Valid CommentRequest commentRequest) {
-        commentFacadeService.save(blockNumber, commentRequest);
+    public CommentInfo save(@PathVariable Long blockNumber,
+                            @RequestBody @Valid CommentRequest commentRequest) {
+        return commentFacadeService.save(blockNumber, commentRequest);
     }
 
     @PatchMapping("/{blockNumber}/comment/{commentId}")
