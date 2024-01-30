@@ -36,7 +36,7 @@ public class CommentEntity {
     private Long depth; // 최상위 댓글: 0, 대댓글: 부모 댓글의 depth + 1
 
     @Field("sequence")
-    private Long sequence; // 같은 부모 댓글의 sequence + 1
+    private Long sequence; // 첫 번째 댓글: 1, 두 번째 댓글: 2, ... (같은 부모 내)
 
     @Field("content")
     private String content;

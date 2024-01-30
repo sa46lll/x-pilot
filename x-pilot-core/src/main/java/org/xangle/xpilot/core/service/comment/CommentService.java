@@ -48,6 +48,10 @@ public class CommentService {
 
     public void addReply(ReplySaveDto replySaveDto) {
         CommentEntity parent = findById(replySaveDto.parentId());
+        Long lastSequence = mongoCommentRepository.findFirstByParentIdOrderBySequenceDesc(replySaveDto.parentId())
+                .map(CommentEntity::getSequence)
+                .orElse(0L);
+
         String rootId = parent.getRootId().isBlank() ? parent.getId() : parent.getRootId();
 
         mongoCommentRepository.save(
@@ -56,8 +60,8 @@ public class CommentService {
                         replySaveDto.blockNumber(),
                         rootId,
                         replySaveDto.parentId(),
-                        parent.getDepth() + 1,
-                        parent.getSequence() + 1,
+                        parent.getDepth() + 1L,
+                        lastSequence + 1L,
                         replySaveDto.content())
         );
     }
