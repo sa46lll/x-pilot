@@ -15,4 +15,4 @@ jasypt:
 
 jwt:
   secret: springtestsecretspringtestsecretspringtestsecret
-  access-token-validity-in-seconds: 86400 # TODO: 24 hours
+  access-token-validity-in-seconds: 86400  # 24 hours for testing
