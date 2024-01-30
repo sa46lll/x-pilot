@@ -9,7 +9,7 @@ jasypt:
 
 jwt:
   secret: ENC(zMPw7eJd1Zg4vQe5H9Zum3j+ndzs/1RqObZ2O+UTCjkPkI6rBcAn7+zdfKsP7KUH7hNvx1KZzoKTzQXnUZmkiCspy7Bzb0eguMnWQRRFHcaLhQFkC5S5Y7YevSZqk+3r36SMKvaFpgY=)
-  access-token-validity-in-seconds: 86400 # TODO: 24 hours
+  access-token-validity-in-seconds: 86400 # 24 hours for testing
 
 logging:
   level:

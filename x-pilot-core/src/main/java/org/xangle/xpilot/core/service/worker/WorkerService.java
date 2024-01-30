@@ -25,13 +25,18 @@ public class WorkerService {
         }
 
         WorkerEntity worker = WorkerEntityMapper.toEntity(signupRequest);
-        worker.encryptPassword(passwordEncoder.encode(signupRequest.password()));
+        worker.encrypt(passwordEncoder.encode(signupRequest.password()));
 
         mongoWorkerRepository.save(worker);
     }
 
     public WorkerEntity findByEmailAndPassword(String email, String password) {
-        return mongoWorkerRepository.findByEmailAndPassword(email, password)
+        return mongoWorkerRepository.findByEmail(email)
+                .filter(worker -> isPasswordCorrect(password, worker.getPassword()))
                 .orElseThrow(() -> new ErrorTypeException("이메일 또는 비밀번호가 일치하지 않습니다.", CustomErrorType.SERVER_ERROR));
+    }
+
+    private boolean isPasswordCorrect(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }

@@ -43,7 +43,7 @@ public class WorkerEntity {
         this.password = password;
     }
 
-    public void encryptPassword(String password) {
+    public void encrypt(String password) {
         this.password = password;
     }
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface MongoWorkerRepository extends MongoRepository<WorkerEntity, String> {
     boolean existsWorkerEntityByEmail(String email);
 
-    Optional<WorkerEntity> findByEmailAndPassword(String email, String password);
+    Optional<WorkerEntity> findByEmail(String email);
 }
