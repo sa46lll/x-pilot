@@ -7,6 +7,7 @@ import org.xangle.xpilot.scheduler.entity.block.BlockJpaEntity;
 import org.xangle.xpilot.scheduler.entity.block.BlockMongoEntity;
 import org.xangle.xpilot.scheduler.repository.block.BlockJpaRepository;
 import org.xangle.xpilot.scheduler.repository.block.BlockMongoRepository;
+import org.xangle.xpilot.scheduler.repository.block.BlockRepository;
 import org.xangle.xpilot.scheduler.service.ByteConverterService;
 
 import java.util.List;
@@ -15,8 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BlockService {
 
-    private static final int MIGRATION_BLOCK_COUNT = 10;
-
+    private final BlockRepository blockRepository;
     private final BlockJpaRepository blockJpaRepository;
     private final BlockMongoRepository blockMongoRepository;
 
@@ -27,21 +27,22 @@ public class BlockService {
     }
 
     @Transactional
-    public List<BlockJpaEntity> findAllAfterBlockNumber(Long blockNumber) {
-        return blockJpaRepository.findAllByNumberBetween(blockNumber, blockNumber + MIGRATION_BLOCK_COUNT);
+    public List<BlockJpaEntity> findAllByNumberRange(Long blockNumber, int count) {
+        return blockJpaRepository.findAllByNumberAfter(blockNumber, count);
     }
 
-    @Transactional
-    public void save(BlockJpaEntity block) {
-        blockMongoRepository.save(
-                new BlockMongoEntity(
+    public void saveAll(List<BlockJpaEntity> blocks) {
+        List<BlockMongoEntity> blockMongoEntities = blocks.stream()
+                .map(block -> new BlockMongoEntity(
                         block.getNumber(),
                         block.getTime(),
                         ByteConverterService.convertToString(block.getHash()),
                         ByteConverterService.convertToString(block.getParentHash()),
                         ByteConverterService.convertToString(block.getMiner()),
-                        block.getSize(),
-                        block.getTransactions().size()
-                ));
+                        block.getSize()
+                ))
+                .toList();
+
+        blockRepository.bulkInsert(blockMongoEntities);
     }
 }

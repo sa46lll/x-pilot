@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CustomBlockJpaRepository {
 
-    List<BlockJpaEntity> findAllByNumberBetween(Long startNumber, Long endNumber);
+    List<BlockJpaEntity> findAllByNumberAfter(Long number, int count);
 }

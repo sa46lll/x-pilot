@@ -32,16 +32,12 @@ public class BlockMongoEntity {
     @Field("size")
     private int size;
 
-    @Field("transaction_count")
-    private int transactionCount;
-
-    public BlockMongoEntity(Long number, Instant time, String hash, String parentHash, String miner, int size, int transactionCount) {
+    public BlockMongoEntity(Long number, Instant time, String hash, String parentHash, String miner, int size) {
         this.number = number;
         this.time = time;
         this.hash = hash;
         this.parentHash = parentHash;
         this.miner = miner;
         this.size = size;
-        this.transactionCount = transactionCount;
     }
 }

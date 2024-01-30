@@ -16,11 +16,15 @@ public class BlockTransactionSavedEventHandler {
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handle(BlockTransactionSavedEvent blockTransactionSavedEvent) throws InterruptedException {
-        String executeTime = formatTime(blockTransactionSavedEvent.executionTime());
+    public void handle(BlockTransactionSavedEvent event) {
+        String executeTime = formatTime(event.executionTime());
 
-        log.info("Scheduler executed at {}: Saved {} blocks.",
-                executeTime, blockTransactionSavedEvent.blockSize());
+        log.info("Scheduler executed at {}: Saved {} blocks from block number {} to {} with {} transactions.",
+                executeTime,
+                event.blockSize(),
+                event.minBlockNumber(),
+                event.maxBlockNumber(),
+                event.transactionSize());
     }
 
     private String formatTime(LocalDateTime time) {

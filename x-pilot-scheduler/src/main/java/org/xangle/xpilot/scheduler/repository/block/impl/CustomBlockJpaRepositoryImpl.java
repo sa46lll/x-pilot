@@ -17,11 +17,11 @@ public class CustomBlockJpaRepositoryImpl implements CustomBlockJpaRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<BlockJpaEntity> findAllByNumberBetween(Long startNumber, Long endNumber) {
+    public List<BlockJpaEntity> findAllByNumberAfter(Long number, int count) {
         return queryFactory.selectFrom(blockJpaEntity)
-                .where(blockJpaEntity.number.between(startNumber, endNumber))
-                .leftJoin(blockJpaEntity.transactions)
-                .fetchJoin()
+                .where(blockJpaEntity.number.gt(number))
+                .orderBy(blockJpaEntity.number.asc())
+                .limit(count)
                 .fetch();
     }
 }

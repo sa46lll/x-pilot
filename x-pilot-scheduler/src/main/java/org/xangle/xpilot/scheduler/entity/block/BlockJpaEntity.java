@@ -27,6 +27,4 @@ public class BlockJpaEntity {
     private byte[] parentHash;
     private byte[] miner;
     private int size;
-    @OneToMany(mappedBy = "blockNumber", fetch = FetchType.LAZY)
-    private List<TransactionJpaEntity> transactions = new ArrayList<>();
 }

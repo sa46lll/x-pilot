@@ -9,15 +9,17 @@ public record BlockTransactionSavedEvent(
         LocalDateTime executionTime,
         int blockSize,
         Long minBlockNumber,
-        Long maxBlockNumber
+        Long maxBlockNumber,
+        int transactionSize
 ) {
 
-    public static BlockTransactionSavedEvent from(List<BlockJpaEntity> blocks) {
+    public static BlockTransactionSavedEvent from(List<BlockJpaEntity> blocks, int trxCount) {
         return new BlockTransactionSavedEvent(
                 LocalDateTime.now(),
                 blocks.size(),
                 blocks.get(0).getNumber(),
-                blocks.get(blocks.size() - 1).getNumber()
+                blocks.get(blocks.size() - 1).getNumber(),
+                trxCount
         );
     }
 }
