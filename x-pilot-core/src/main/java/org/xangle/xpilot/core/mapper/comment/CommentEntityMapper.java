@@ -12,7 +12,8 @@ public class CommentEntityMapper {
                                          String rootId,
                                          String parentId,
                                          Long depth,
+                                         Long sequence,
                                          String content) {
-        return new CommentEntity(blockNumber, workerId, rootId, parentId, depth, content);
+        return new CommentEntity(blockNumber, workerId, rootId, parentId, depth, sequence, content);
     }
 }

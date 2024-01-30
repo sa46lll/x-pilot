@@ -13,16 +13,14 @@ import org.xangle.xpilot.core.mapper.comment.CommentEntityMapper;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
-import org.xangle.xpilot.core.model.response.CommentListInfo;
+import org.xangle.xpilot.core.model.response.CommentChildInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.repository.comment.MongoCommentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +41,7 @@ public class CommentService {
                         "",
                         "",
                         0L,
+                        1L,
                         commentSaveDto.content())
         );
     }
@@ -58,6 +57,7 @@ public class CommentService {
                         rootId,
                         replySaveDto.parentId(),
                         parent.getDepth() + 1,
+                        parent.getSequence() + 1,
                         replySaveDto.content())
         );
     }
@@ -73,47 +73,34 @@ public class CommentService {
         mongoCommentRepository.save(comment);
     }
 
-    public PageableInfo<CommentListInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
+    public PageableInfo<CommentChildInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
         Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
-        Page<CommentEntity> roots = mongoCommentRepository.findAllByBlockNumberAndDepth(blockNumber, 0L, pageable);
+        Page<CommentEntity> comments = mongoCommentRepository.findAllByBlockNumberAndDepth(blockNumber, 0L, pageable);
+        List<CommentEntity> replies = mongoCommentRepository.findAllByRootIdIn(
+                comments.stream()
+                        .map(CommentEntity::getId)
+                        .toList());
 
-        List<String> rootIds = roots.stream()
-                .map(CommentEntity::getId)
-                .toList();
+        List<CommentChildInfo> response = new ArrayList<>();
 
-        List<CommentEntity> replies = mongoCommentRepository.findAllByRootIdIn(rootIds);
+        for (CommentEntity root : comments) {
+            Map<String, CommentChildInfo> map = replies.stream()
+                    .filter(commentEntity -> commentEntity.getRootId().equals(root.getId()))
+                    .collect(Collectors.toMap(
+                            commentEntity -> commentEntity.getParentId() + "_" + commentEntity.getSequence(),
+                            CommentChildInfo::of
+                    ));
 
-        Map<String, List<CommentEntity>> groupRootId = replies.stream()
-                .collect(groupingBy(CommentEntity::getRootId));
-
-        for (CommentEntity rootEntity : roots) {
-            if (!groupRootId.containsKey(rootEntity.getId())) {
-                groupRootId.put(rootEntity.getId(), List.of());
-            }
+            CommentChildInfo comment = CommentChildInfo.of(root);
+            comment.setReplies(map);
+            response.add(comment);
         }
 
-        Map<CommentEntity, List<CommentEntity>> groupByRootComment = groupRootId.entrySet().stream()
-                .collect(Collectors.toMap(
-                        entry -> findCommentEntityByRootId(roots.getContent(), entry.getKey()),
-                        Entry::getValue
-                ));
-
-        List<CommentListInfo> response = groupByRootComment.entrySet().stream()
-                .map(entry -> CommentListInfo.of(entry.getKey(), entry.getValue()))
-                .toList();
-
         return PageableInfo.of(
-                roots.getNumber(),
-                roots.getSize(),
-                roots.getTotalPages(),
-                roots.getTotalElements(),
+                comments.getNumber(),
+                comments.getSize(),
+                comments.getTotalPages(),
+                comments.getTotalElements(),
                 response);
-    }
-
-    private CommentEntity findCommentEntityByRootId(List<CommentEntity> commentEntities, String rootId) {
-        return commentEntities.stream()
-                .filter(commentEntity -> commentEntity.getId().equals(rootId))
-                .findAny()
-                .orElseThrow(() -> new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND));
     }
 }

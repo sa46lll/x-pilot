@@ -11,12 +11,12 @@ public record BlockDetailInfo(
         int txCount,
         String miner,
         List<TransactionInfo> transactions,
-        PageableInfo<CommentListInfo> comments
+        PageableInfo<CommentChildInfo> comments
 ) {
 
     public static BlockDetailInfo of(BlockEntity block,
                                      List<TransactionInfo> transactions,
-                                     PageableInfo<CommentListInfo> comments) {
+                                     PageableInfo<CommentChildInfo> comments) {
         return new BlockDetailInfo(
                 block.getNumber(),
                 DateUtilService.getAge(block.getTime()),

@@ -27,13 +27,16 @@ public class CommentEntity {
     private String workerId;
 
     @Field("root_id")
-    private String rootId;
+    private String rootId; // 최상위 댓글 id
 
     @Field("parent_id")
-    private String parentId;
+    private String parentId; // 부모 댓글 id
 
     @Field("depth")
-    private Long depth;
+    private Long depth; // 최상위 댓글: 0, 대댓글: 부모 댓글의 depth + 1
+
+    @Field("sequence")
+    private Long sequence; // 같은 부모 댓글의 sequence + 1
 
     @Field("content")
     private String content;
@@ -49,12 +52,13 @@ public class CommentEntity {
     @Field("updated_time")
     private Instant updatedTime;
 
-    public CommentEntity(Long blockNumber, String workerId, String rootId, String parentId, Long depth, String content) {
+    public CommentEntity(Long blockNumber, String workerId, String rootId, String parentId, Long depth, Long sequence, String content) {
         this.blockNumber = blockNumber;
         this.workerId = workerId;
         this.rootId = rootId;
         this.parentId = parentId;
         this.depth = depth;
+        this.sequence = sequence;
         this.content = content;
     }
 
