@@ -48,7 +48,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    CorsConfiguration corsConfiguration() { // 필요한지 유무 확인
+    CorsConfiguration corsConfiguration() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Collections.singletonList("*"));
         config.setAllowedMethods(Collections.singletonList("*"));

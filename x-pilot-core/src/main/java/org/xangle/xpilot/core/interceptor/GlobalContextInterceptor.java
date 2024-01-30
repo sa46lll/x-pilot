@@ -11,7 +11,7 @@ import org.xangle.xpilot.core.model.ContextHandler;
 
 @Component
 @RequiredArgsConstructor
-public class WorkerIdInterceptor implements HandlerInterceptor {
+public class GlobalContextInterceptor implements HandlerInterceptor {
 
     private static final String BEARER = "Bearer ";
 

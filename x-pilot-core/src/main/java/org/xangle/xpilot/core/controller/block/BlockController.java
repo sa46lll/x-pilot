@@ -32,6 +32,7 @@ public class BlockController {
     public BlockDetailInfo findByBlockNumber(@PathVariable Long blockNumber,
                                              @RequestParam(required = false, defaultValue = "1") int page,
                                              @RequestParam(required = false, defaultValue = "5") int size) {
-        return blockFacadeService.findByBlockNumber(new BlockDetailRequest(blockNumber, page, size));
+        return blockFacadeService.findByBlockNumber(
+                new BlockDetailRequest(blockNumber, page, size));
     }
 }

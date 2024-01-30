@@ -31,6 +31,6 @@ public class BlockFacadeService {
         });
 
         applicationEventPublisher.publishEvent(
-                new BlockTransactionSavedEvent(LocalDateTime.now(), blocks.size()));
+                BlockTransactionSavedEvent.from(blocks));
     }
 }

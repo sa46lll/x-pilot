@@ -7,7 +7,7 @@ import org.xangle.xpilot.scheduler.facade.block.BlockFacadeService;
 
 @Component
 @RequiredArgsConstructor
-public class BlockTransactionMigrationScheduler {
+public class MigrationScheduler {
 
     private final BlockFacadeService blockFacadeService;
 

@@ -7,10 +7,7 @@ public class CommentEntityMapper {
     private CommentEntityMapper() {
     }
 
-    public static CommentEntity toEntity(String workerId,
-                                         Long blockNumber,
-                                         String rootId,
-                                         String parentId,
+    public static CommentEntity toEntity(String workerId, Long blockNumber, String rootId, String parentId,
                                          Long depth,
                                          Long sequence,
                                          String content) {

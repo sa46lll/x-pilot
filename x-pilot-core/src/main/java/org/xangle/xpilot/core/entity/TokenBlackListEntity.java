@@ -25,12 +25,11 @@ public class TokenBlackListEntity {
     @Field("expired_time")
     private Instant expiredTime;
 
-    public TokenBlackListEntity(String token, Instant expiredTime) {
+    public TokenBlackListEntity(String token) {
         this.token = token;
-        this.expiredTime = expiredTime;
     }
 
-    public static TokenBlackListEntity createAccessToken(String token) {
-        return new TokenBlackListEntity(token, DateUtilService.now());
+    public void expire() {
+        this.expiredTime = DateUtilService.now();
     }
 }

@@ -22,7 +22,10 @@ public class AccessTokenService {
 
     @Transactional
     public void expire(String accessToken) {
-        mongoTokenBlacklistRepository.save(TokenBlackListEntity.createAccessToken(accessToken));
+        TokenBlackListEntity tokenBlackListEntity = new TokenBlackListEntity(accessToken);
+        tokenBlackListEntity.expire();
+
+        mongoTokenBlacklistRepository.save(tokenBlackListEntity);
     }
 
     public boolean exists(String accessToken) {

@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BlockService {
 
-    private static final int MIGRATION_BLOCK_COUNT = 100;
+    private static final int MIGRATION_BLOCK_COUNT = 10;
 
     private final BlockJpaRepository blockJpaRepository;
     private final BlockMongoRepository blockMongoRepository;
