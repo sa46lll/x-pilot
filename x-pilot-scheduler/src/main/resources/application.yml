@@ -1,8 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/xpilot
-    username: root
-    password: password
+#    url: jdbc:postgresql://localhost:5432/xpilot
+#    username: root
+#    password: password
+    url: ENC(Bet8yne5Y1L8GqxZdVf1lkquEvezuVHtHUrgA6WecGZfWZxoZLfJm8hJKL57aGrQz05cbfvaicb2Ug4mWmzQTprd7xh41UZYQjB4ltt3+RY=)
+    password: ENC(hLIYUkN49b0bFWL4zfqaK3qA8oshyL9q)
     driver-class-name: org.postgresql.Driver
   data:
     mongodb:

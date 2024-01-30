@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BlockJpaRepository extends JpaRepository<BlockJpaEntity, Long> {
 
-    List<BlockJpaEntity> findAllByNumberAfter(Long number);
+    List<BlockJpaEntity> findAllByNumberBetween(Long startNumber, Long endNumber);
 }

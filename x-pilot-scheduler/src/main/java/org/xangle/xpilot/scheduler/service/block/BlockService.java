@@ -15,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BlockService {
 
+    private static final int MIGRATION_BLOCK_COUNT = 100;
+
     private final BlockJpaRepository blockJpaRepository;
     private final BlockMongoRepository blockMongoRepository;
 
@@ -24,9 +26,9 @@ public class BlockService {
                 .orElse(-1L);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<BlockJpaEntity> findAllAfterBlockNumber(Long blockNumber) {
-        return blockJpaRepository.findAllByNumberAfter(blockNumber);
+        return blockJpaRepository.findAllByNumberBetween(blockNumber, blockNumber + MIGRATION_BLOCK_COUNT);
     }
 
     @Transactional
