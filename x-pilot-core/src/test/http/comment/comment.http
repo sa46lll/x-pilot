@@ -1,0 +1,29 @@
+
+### {{POST}} `v1/block/{blockNumber}/comment`
+POST {{apiAddress}}/v1/block/482/comment
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
+
+{
+  "parentId": "",
+  "content": "root"
+}
+
+### {{PATCH}} `v1/block/{blockNumber}/comment/{commentId}`
+PATCH {{apiAddress}}/v1/block/482/comment/65ba4701299c28757d467027
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
+
+{
+  "content": "patch content"
+}
+
+### {{DELETE}} `v1/block/{blockNumber}/comment/{commentId}`
+DELETE {{apiAddress}}/v1/block/482/comment/65ba4701299c28757d467027
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
+
+### {{GET}} `v1/block/{blockNumber}/comment/{commentId}/reply`
+GET {{apiAddress}}/v1/block/482/comment/65ba4701299c28757d467027/reply?page=0&size=5
+Authorization: Bearer {{authorization}}
+Content-Type: application/json

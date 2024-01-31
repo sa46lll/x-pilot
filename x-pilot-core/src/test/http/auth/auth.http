@@ -1,0 +1,24 @@
+
+### {{POST}} `/v1/auth/signup`
+POST {{apiAddress}}/v1/auth/signup
+Content-Type: application/json
+
+{
+  "email": "merry@crossangle.io",
+  "name": "서명현",
+  "password": "password"
+}
+
+### {{POST}} `/v1/auth/login`
+POST {{apiAddress}}/v1/auth/login
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
+
+{
+  "email": "merry@crossangle.io",
+  "password": "password"
+}
+
+### {{POST}} `/v1/auth/logout`
+POST {{apiAddress}}/v1/auth/logout
+Authorization: Bearer {{authorization}}

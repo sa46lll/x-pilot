@@ -1,0 +1,12 @@
+
+### {{GET}} `/v1/block/list`
+GET {{apiAddress}}/v1/block/list?page=0&size=5
+Authorization: Bearer {{authorization}}
+
+### {{GET}} `/v1/block/{blockNumber}`
+GET {{apiAddress}}/v1/block/482?page=0&size=5
+Authorization: Bearer {{authorization}}
+
+### {{GET}} `/v2/block/{blockNumber}`
+GET {{apiAddress}}/v2/block/482?page=0&size=5
+Authorization: Bearer {{authorization}}
