@@ -6,6 +6,7 @@ import org.xangle.xpilot.scheduler.entity.transaction.TransactionJpaEntity;
 import org.xangle.xpilot.scheduler.entity.transaction.TransactionMongoEntity;
 import org.xangle.xpilot.scheduler.repository.transaction.TransactionJpaRepository;
 import org.xangle.xpilot.scheduler.repository.transaction.TransactionMongoRepository;
+import org.xangle.xpilot.scheduler.repository.transaction.TransactionRepository;
 import org.xangle.xpilot.scheduler.service.ByteConverterService;
 import org.xangle.xpilot.scheduler.service.TransactionFeeCalculatorService;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionService {
 
+    private final TransactionRepository transactionRepository;
     private final TransactionJpaRepository transactionJpaRepository;
     private final TransactionMongoRepository transactionMongoRepository;
 
@@ -38,6 +40,6 @@ public class TransactionService {
                 ))
                 .toList();
 
-        transactionMongoRepository.saveAll(transactionMongoEntities);
+        transactionRepository.bulkInsert(transactionMongoEntities);
     }
 }
