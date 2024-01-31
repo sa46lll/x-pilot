@@ -13,7 +13,10 @@ import org.xangle.xpilot.core.mapper.comment.CommentEntityMapper;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
+import org.xangle.xpilot.core.model.request.ReplyListRequest;
 import org.xangle.xpilot.core.model.response.CommentChildInfo;
+import org.xangle.xpilot.core.model.response.CommentDetailInfo;
+import org.xangle.xpilot.core.model.response.CommentInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.repository.comment.CommentRepository;
 import org.xangle.xpilot.core.repository.comment.MongoCommentRepository;
@@ -85,7 +88,7 @@ public class CommentService {
     public PageableInfo<CommentChildInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
         Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
         Page<CommentEntity> comments = mongoCommentRepository.findAllByBlockNumberAndDepth(blockNumber, 0L, pageable);
-        List<CommentEntity> replies = mongoCommentRepository.findAllByRootIdIn(
+        List<CommentEntity> replies = mongoCommentRepository.findAllByRootIdIn( // between
                 comments.stream()
                         .map(CommentEntity::getId)
                         .toList());
@@ -111,6 +114,34 @@ public class CommentService {
                 comments.getTotalPages(),
                 comments.getTotalElements(),
                 response);
+    }
+
+    public PageableInfo<CommentDetailInfo> findRootCommentsByBlockNumber(BlockDetailRequest blockDetailRequest) {
+        Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
+        Page<CommentEntity> comments = mongoCommentRepository.findAllByBlockNumberAndDepth(blockDetailRequest.blockNumber(), 0L, pageable);
+
+        return PageableInfo.of(
+                comments.getNumber(),
+                comments.getSize(),
+                comments.getTotalPages(),
+                comments.getTotalElements(),
+                comments.stream()
+                        .map(CommentDetailInfo::of)
+                        .toList());
+    }
+
+    public PageableInfo<CommentInfo> findAllByParentId(ReplyListRequest replyListRequest) {
+        Pageable pageable = PageRequest.of(replyListRequest.page(), replyListRequest.size());
+        Page<CommentEntity> comments = mongoCommentRepository.findAllByParentId(replyListRequest.commentId(), pageable);
+
+        return PageableInfo.of(
+                comments.getNumber(),
+                comments.getSize(),
+                comments.getTotalPages(),
+                comments.getTotalElements(),
+                comments.stream()
+                        .map(CommentInfo::from)
+                        .toList());
     }
 
     // TODO: Remove this method (더미 데이터를 위한 메서드)

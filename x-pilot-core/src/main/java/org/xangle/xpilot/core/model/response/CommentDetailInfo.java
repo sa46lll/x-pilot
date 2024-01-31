@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 public record CommentDetailInfo(
+        String commentId,
         String workerId,
         String content,
         Instant createTime,
@@ -15,6 +16,7 @@ public record CommentDetailInfo(
 ) {
     public static CommentDetailInfo of(CommentEntity commentEntity) {
         return new CommentDetailInfo(
+                commentEntity.getId(),
                 commentEntity.getWorkerId(),
                 commentEntity.getContent(),
                 commentEntity.getCreatedTime(),

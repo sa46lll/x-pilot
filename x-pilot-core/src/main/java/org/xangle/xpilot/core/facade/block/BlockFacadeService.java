@@ -6,7 +6,9 @@ import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.TransactionEntity;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
 import org.xangle.xpilot.core.model.response.BlockDetailInfo;
+import org.xangle.xpilot.core.model.response.BlockDetailInfo2;
 import org.xangle.xpilot.core.model.response.CommentChildInfo;
+import org.xangle.xpilot.core.model.response.CommentDetailInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.model.response.TransactionInfo;
 import org.xangle.xpilot.core.service.block.BlockService;
@@ -33,5 +35,17 @@ public class BlockFacadeService {
                 .toList();
 
         return BlockDetailInfo.of(block, transactionInfo, comments);
+    }
+
+    public BlockDetailInfo2 findSummaryByBlockNumber(BlockDetailRequest blockDetailRequest) {
+        BlockEntity block = blockService.findByNumber(blockDetailRequest.blockNumber());
+        List<TransactionEntity> transactions = transactionService.findAllByBlockNumber(block.getNumber());
+        PageableInfo<CommentDetailInfo> comments = commentService.findRootCommentsByBlockNumber(blockDetailRequest);
+
+        List<TransactionInfo> transactionInfo = transactions.stream()
+                .map(TransactionInfo::from)
+                .toList();
+
+        return BlockDetailInfo2.of(block, transactionInfo, comments);
     }
 }

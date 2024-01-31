@@ -14,4 +14,6 @@ public interface MongoCommentRepository extends MongoRepository<CommentEntity, S
     List<CommentEntity> findAllByRootIdIn(List<String> rootIds);
 
     Optional<CommentEntity> findFirstByParentIdOrderBySequenceDesc(String parentId);
+
+    Page<CommentEntity> findAllByParentId(String parentId, Pageable pageable);
 }
