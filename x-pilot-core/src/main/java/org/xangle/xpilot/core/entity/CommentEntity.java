@@ -62,6 +62,18 @@ public class CommentEntity {
         this.content = content;
     }
 
+    public CommentEntity(String id, Long blockNumber, String workerId, String rootId, String parentId, Long depth, Long sequence, String content, Instant createdTime) {
+        this.id = id;
+        this.blockNumber = blockNumber;
+        this.workerId = workerId;
+        this.rootId = rootId;
+        this.parentId = parentId;
+        this.depth = depth;
+        this.sequence = sequence;
+        this.content = content;
+        this.createdTime = createdTime;
+    }
+
     public void updateContent(String content) {
         this.content = content;
     }

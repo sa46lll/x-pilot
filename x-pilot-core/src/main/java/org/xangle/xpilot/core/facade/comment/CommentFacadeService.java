@@ -7,15 +7,18 @@ import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.CommentEntity;
 import org.xangle.xpilot.core.exception.CustomErrorType;
 import org.xangle.xpilot.core.exception.ErrorTypeException;
+import org.xangle.xpilot.core.model.request.CommentDummyRequest;
 import org.xangle.xpilot.core.model.request.CommentRequest;
 import org.xangle.xpilot.core.model.CommentSaveDto;
 import org.xangle.xpilot.core.model.ReplySaveDto;
 import org.xangle.xpilot.core.model.ContextHandler;
 import org.xangle.xpilot.core.model.request.CommentUpdateRequest;
 import org.xangle.xpilot.core.model.response.CommentInfo;
+import org.xangle.xpilot.core.service.DateUtilService;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
 
+import java.util.List;
 import java.util.Objects;
 
 @Facade
@@ -58,5 +61,23 @@ public class CommentFacadeService {
         if (!Objects.equals(comment.getWorkerId(), workerId) || !Objects.equals(comment.getBlockNumber(), blockNumber)) {
             throw new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND);
         }
+    }
+
+    // TODO: Remove this method (더미 데이터를 위한 메서드)
+    public void saveAllDummy(Long blockNumber, List<CommentDummyRequest> requests) {
+        List<CommentEntity> comments = requests.stream().
+                map(comment -> new CommentEntity(
+                        comment.objectId(),
+                        blockNumber,
+                        comment.workerId(),
+                        comment.rootId(),
+                        comment.parentId(),
+                        comment.depth(),
+                        comment.sequence(),
+                        comment.content(),
+                        DateUtilService.now())
+                ).toList();
+
+        commentService.addAllReplies(comments);
     }
 }

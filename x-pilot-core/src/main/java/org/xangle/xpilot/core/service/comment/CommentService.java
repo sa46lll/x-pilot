@@ -15,6 +15,7 @@ import org.xangle.xpilot.core.model.ReplySaveDto;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
 import org.xangle.xpilot.core.model.response.CommentChildInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
+import org.xangle.xpilot.core.repository.comment.CommentRepository;
 import org.xangle.xpilot.core.repository.comment.MongoCommentRepository;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentService {
 
+    private final CommentRepository commentRepository;
     private final MongoCommentRepository mongoCommentRepository;
 
     public CommentEntity findById(String commentId) {
@@ -109,5 +111,10 @@ public class CommentService {
                 comments.getTotalPages(),
                 comments.getTotalElements(),
                 response);
+    }
+
+    // TODO: Remove this method (더미 데이터를 위한 메서드)
+    public void addAllReplies(List<CommentEntity> comments) {
+        commentRepository.bulkInsert(comments);
     }
 }
