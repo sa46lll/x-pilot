@@ -5,13 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.entity.CommentEntity;
 import org.xangle.xpilot.core.exception.CustomErrorType;
 import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.mapper.comment.CommentEntityMapper;
-import org.xangle.xpilot.core.model.CommentSaveDto;
-import org.xangle.xpilot.core.model.ReplySaveDto;
+import org.xangle.xpilot.core.model.request.CommentSaveRequest;
+import org.xangle.xpilot.core.model.request.ReplySaveRequest;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
 import org.xangle.xpilot.core.model.request.ReplyListRequest;
 import org.xangle.xpilot.core.model.response.CommentChildInfo;
@@ -38,36 +37,36 @@ public class CommentService {
                 .orElseThrow(() -> new ErrorTypeException("Comment not found", CustomErrorType.COMMENT_NOT_FOUND));
     }
 
-    public CommentEntity addComment(CommentSaveDto commentSaveDto) {
+    public CommentEntity addComment(CommentSaveRequest commentSaveRequest) {
         CommentEntity comment = CommentEntityMapper.toEntity(
-                commentSaveDto.workerId(),
-                commentSaveDto.blockNumber(),
+                commentSaveRequest.workerId(),
+                commentSaveRequest.blockNumber(),
                 "",
                 "",
                 0L,
                 1L,
-                commentSaveDto.content());
+                commentSaveRequest.content());
         mongoCommentRepository.save(comment);
 
         return comment;
     }
 
-    public CommentEntity addReply(ReplySaveDto replySaveDto) {
-        CommentEntity parent = findById(replySaveDto.parentId());
-        Long lastSequence = mongoCommentRepository.findFirstByParentIdOrderBySequenceDesc(replySaveDto.parentId())
+    public CommentEntity addReply(ReplySaveRequest replySaveRequest) {
+        CommentEntity parent = findById(replySaveRequest.parentId());
+        Long lastSequence = mongoCommentRepository.findFirstByParentIdOrderBySequenceDesc(replySaveRequest.parentId())
                 .map(CommentEntity::getSequence)
                 .orElse(0L);
 
         String rootId = parent.getRootId().isBlank() ? parent.getId() : parent.getRootId();
 
         CommentEntity reply = CommentEntityMapper.toEntity(
-                replySaveDto.workerId(),
-                replySaveDto.blockNumber(),
+                replySaveRequest.workerId(),
+                replySaveRequest.blockNumber(),
                 rootId,
-                replySaveDto.parentId(),
+                replySaveRequest.parentId(),
                 parent.getDepth() + 1L,
                 lastSequence + 1L,
-                replySaveDto.content());
+                replySaveRequest.content());
 
         mongoCommentRepository.save(reply);
 

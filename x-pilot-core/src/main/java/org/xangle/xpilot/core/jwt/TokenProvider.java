@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.xangle.xpilot.core.model.XPilotWorker;
 import org.xangle.xpilot.core.service.token.AccessTokenService;
 
 import java.security.Key;

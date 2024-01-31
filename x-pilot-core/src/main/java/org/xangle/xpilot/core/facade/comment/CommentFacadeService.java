@@ -8,8 +8,8 @@ import org.xangle.xpilot.core.exception.CustomErrorType;
 import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.model.request.CommentDummyRequest;
 import org.xangle.xpilot.core.model.request.CommentRequest;
-import org.xangle.xpilot.core.model.CommentSaveDto;
-import org.xangle.xpilot.core.model.ReplySaveDto;
+import org.xangle.xpilot.core.model.request.CommentSaveRequest;
+import org.xangle.xpilot.core.model.request.ReplySaveRequest;
 import org.xangle.xpilot.core.model.ContextHandler;
 import org.xangle.xpilot.core.model.request.CommentUpdateRequest;
 import org.xangle.xpilot.core.model.response.CommentInfo;
@@ -33,8 +33,8 @@ public class CommentFacadeService {
         boolean isRoot = commentRequest.parentId().isBlank();
 
         CommentEntity comment = isRoot ?
-                commentService.addComment(CommentSaveDto.of(block.getNumber(), workerId, commentRequest.content())) :
-                commentService.addReply(ReplySaveDto.of(block.getNumber(), workerId, commentRequest.parentId(), commentRequest.content()));
+                commentService.addComment(CommentSaveRequest.of(block.getNumber(), workerId, commentRequest.content())) :
+                commentService.addReply(ReplySaveRequest.of(block.getNumber(), workerId, commentRequest.parentId(), commentRequest.content()));
 
         return CommentInfo.from(comment);
     }
