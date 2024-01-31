@@ -13,7 +13,7 @@ public record BlockTransactionSavedEvent(
         int transactionSize
 ) {
 
-    public static BlockTransactionSavedEvent from(List<BlockJpaEntity> blocks, int trxCount) {
+    public static BlockTransactionSavedEvent of(List<BlockJpaEntity> blocks, int trxCount) {
         return new BlockTransactionSavedEvent(
                 LocalDateTime.now(),
                 blocks.size(),

@@ -1,35 +1,38 @@
 package org.xangle.xpilot.scheduler.facade.block;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
+import org.xangle.xpilot.scheduler.aspect.annotation.Facade;
 import org.xangle.xpilot.scheduler.entity.block.BlockJpaEntity;
+import org.xangle.xpilot.scheduler.entity.recovery.RecoveryTaskEntity;
 import org.xangle.xpilot.scheduler.entity.transaction.TransactionJpaEntity;
 import org.xangle.xpilot.scheduler.model.event.BlockTransactionSavedEvent;
 import org.xangle.xpilot.scheduler.service.block.BlockService;
+import org.xangle.xpilot.scheduler.service.recoverytask.RecoveryTaskService;
 import org.xangle.xpilot.scheduler.service.transaction.TransactionService;
 
 import java.util.List;
 
 @Slf4j
-@Component
+@Facade
 @RequiredArgsConstructor
 public class BlockFacadeService {
 
-    private static final int BLOCKS_PER_FETCH = 100_000;
+    private static final int BLOCKS_PER_FETCH = 1_000;
 
     private final BlockService blockService;
     private final TransactionService transactionService;
+    private final RecoveryTaskService recoveryTaskService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void migrate() {
+    public void migrate() { // graceful shutdown
         Long lastBlockNumber = blockService.findLastBlockNumber();
+        Long lastBlockNumberByTrx = transactionService.findLastBlockNumber();
 
         List<BlockJpaEntity> blocks = blockService.findAllByNumberRange(lastBlockNumber, BLOCKS_PER_FETCH);
         List<TransactionJpaEntity> trxs = transactionService.findAllByBlockNumberRange(
-                lastBlockNumber + 1, lastBlockNumber + BLOCKS_PER_FETCH);
+                lastBlockNumberByTrx + 1, lastBlockNumber + BLOCKS_PER_FETCH);
 
         try {
             blockService.saveAll(blocks);
@@ -38,10 +41,13 @@ public class BlockFacadeService {
             }
 
             applicationEventPublisher.publishEvent(
-                    BlockTransactionSavedEvent.from(blocks, trxs.size()));
+                    BlockTransactionSavedEvent.of(blocks, trxs.size()));
 
         } catch (Exception e) {
             log.error("Failed to migrate blocks and transactions", e);
+
+            recoveryTaskService.save(
+                    new RecoveryTaskEntity(lastBlockNumber + 1, lastBlockNumber + BLOCKS_PER_FETCH, false, e.getMessage()));
         }
     }
 }

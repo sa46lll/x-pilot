@@ -1,6 +1,7 @@
 package org.xangle.xpilot.scheduler.entity.transaction;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@Getter
 @Document("transaction")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TransactionMongoEntity {

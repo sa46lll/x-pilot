@@ -1,10 +1,9 @@
 package org.xangle.xpilot.scheduler.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 import org.xangle.xpilot.scheduler.model.event.BlockTransactionSavedEvent;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class BlockTransactionSavedEventHandler {
 
     @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @EventListener
     public void handle(BlockTransactionSavedEvent event) {
         String executeTime = formatTime(event.executionTime());
 
