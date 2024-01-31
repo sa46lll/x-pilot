@@ -12,6 +12,7 @@ import org.xangle.xpilot.core.facade.auth.AuthFacadeService;
 import org.xangle.xpilot.core.model.request.LoginRequest;
 import org.xangle.xpilot.core.model.request.SignupRequest;
 import org.xangle.xpilot.core.model.response.AccessTokenInfo;
+import org.xangle.xpilot.core.model.response.SignupInfo;
 import org.xangle.xpilot.core.service.worker.WorkerService;
 import org.xangle.xpilot.core.service.token.AccessTokenService;
 
@@ -25,8 +26,8 @@ public class AuthController {
     private final AccessTokenService accessTokenService;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody @Valid SignupRequest signupRequest) {
-        workerService.signup(signupRequest);
+    public SignupInfo signup(@RequestBody @Valid SignupRequest signupRequest) {
+        return workerService.signup(signupRequest);
     }
 
     @PostMapping("/login")

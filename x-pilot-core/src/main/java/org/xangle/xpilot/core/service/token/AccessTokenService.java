@@ -2,7 +2,6 @@ package org.xangle.xpilot.core.service.token;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.entity.AccessTokenEntity;
 import org.xangle.xpilot.core.entity.TokenBlackListEntity;
 import org.xangle.xpilot.core.repository.auth.MongoAccessTokenRepository;
@@ -20,7 +19,6 @@ public class AccessTokenService {
         mongoAccessTokenRepository.save(accessTokenEntity);
     }
 
-    @Transactional
     public void expire(String accessToken) {
         TokenBlackListEntity tokenBlackListEntity = new TokenBlackListEntity(accessToken);
         tokenBlackListEntity.expire();

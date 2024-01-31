@@ -34,16 +34,16 @@ public class CommentController {
     }
 
     @PatchMapping("/{blockNumber}/comment/{commentId}")
-    public void update(@PathVariable Long blockNumber,
+    public CommentInfo update(@PathVariable Long blockNumber,
                        @PathVariable String commentId,
                        @RequestBody @Valid CommentUpdateRequest commentUpdateRequest) {
-        commentFacadeService.update(blockNumber, commentId, commentUpdateRequest);
+        return commentFacadeService.update(blockNumber, commentId, commentUpdateRequest);
     }
 
     @DeleteMapping("/{blockNumber}/comment/{commentId}")
-    public void delete(@PathVariable Long blockNumber,
+    public CommentInfo delete(@PathVariable Long blockNumber,
                        @PathVariable String commentId) {
-        commentFacadeService.delete(blockNumber, commentId);
+        return commentFacadeService.delete(blockNumber, commentId);
     }
 
     /**

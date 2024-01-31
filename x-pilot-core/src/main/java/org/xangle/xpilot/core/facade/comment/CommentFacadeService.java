@@ -1,7 +1,6 @@
 package org.xangle.xpilot.core.facade.comment;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 import org.xangle.xpilot.core.aspect.annotation.Facade;
 import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.CommentEntity;
@@ -28,7 +27,6 @@ public class CommentFacadeService {
     private final BlockService blockService;
     private final CommentService commentService;
 
-    @Transactional
     public CommentInfo save(Long blockNumber, CommentRequest commentRequest) {
         BlockEntity block = blockService.findByNumber(blockNumber);
         String workerId = ContextHandler.getWorkerId();
@@ -41,20 +39,22 @@ public class CommentFacadeService {
         return CommentInfo.from(comment);
     }
 
-    @Transactional
-    public void update(Long blockNumber, String commentId, CommentUpdateRequest commentUpdateRequest) {
+    public CommentInfo update(Long blockNumber, String commentId, CommentUpdateRequest commentUpdateRequest) {
         CommentEntity comment = commentService.findById(commentId);
         validate(comment, ContextHandler.getWorkerId(), blockNumber);
 
-        commentService.update(comment, commentUpdateRequest.content());
+        CommentEntity updatedComment = commentService.update(comment, commentUpdateRequest.content());
+
+        return CommentInfo.from(updatedComment);
     }
 
-    @Transactional
-    public void delete(Long blockNumber, String commentId) {
+    public CommentInfo delete(Long blockNumber, String commentId) {
         CommentEntity comment = commentService.findById(commentId);
         validate(comment, ContextHandler.getWorkerId(), blockNumber);
 
-        commentService.delete(comment);
+        CommentEntity updatedComment = commentService.delete(comment);
+
+        return CommentInfo.from(updatedComment);
     }
 
     private void validate(CommentEntity comment, String workerId, Long blockNumber) {

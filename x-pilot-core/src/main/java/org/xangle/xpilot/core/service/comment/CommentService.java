@@ -74,15 +74,18 @@ public class CommentService {
         return reply;
     }
 
-    @Transactional
-    public void update(CommentEntity comment, String content) {
+    public CommentEntity update(CommentEntity comment, String content) {
         comment.updateContent(content);
         mongoCommentRepository.save(comment);
+
+        return comment;
     }
 
-    public void delete(CommentEntity comment) {
+    public CommentEntity delete(CommentEntity comment) {
         comment.delete();
         mongoCommentRepository.save(comment);
+
+        return comment;
     }
 
     public PageableInfo<CommentChildInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
