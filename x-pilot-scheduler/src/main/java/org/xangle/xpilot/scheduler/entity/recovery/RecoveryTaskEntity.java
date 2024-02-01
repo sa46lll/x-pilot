@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.time.Instant;
+
 @Getter
 @Document("recovery_task")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,10 +36,10 @@ public class RecoveryTaskEntity {
     private int retryCount;
 
     @CreatedDate
-    private String createdTime;
+    private Instant createdTime;
 
     @LastModifiedDate
-    private String updatedTime;
+    private Instant updatedTime;
 
     public RecoveryTaskEntity(Long minBlockNumber, Long maxBlockNumber, boolean isCompleted, String log) {
         this.minBlockNumber = minBlockNumber;
