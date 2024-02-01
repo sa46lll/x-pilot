@@ -1,3 +1,6 @@
+server:
+  shutdown: graceful
+
 spring:
   datasource:
 #    url: jdbc:postgresql://localhost:5432/xpilot
