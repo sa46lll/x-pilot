@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TransactionJpaRepository extends JpaRepository<TransactionJpaEntity, String>, CustomTransactionJpaRepository {
 
-    List<TransactionJpaEntity> findAllByBlockNumberBetween(Long minBlockNumber, Long maxBlockNumber);
+    List<TransactionJpaEntity> findAllByBlockNumberBetween(Long startBlockNumber, Long endBlockNumber);
 }

@@ -2,7 +2,6 @@ package org.xangle.xpilot.core.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.security.core.parameters.P;
 import org.xangle.xpilot.core.entity.CommentEntity;
 import org.xangle.xpilot.core.model.ContextHandler;
 

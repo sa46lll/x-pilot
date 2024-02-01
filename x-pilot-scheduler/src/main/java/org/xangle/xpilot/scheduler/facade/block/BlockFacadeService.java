@@ -26,13 +26,12 @@ public class BlockFacadeService {
     private final RecoveryTaskService recoveryTaskService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void migrate() { // graceful shutdown
-        Long lastBlockNumber = blockService.findLastBlockNumber();
-        Long lastBlockNumberByTrx = transactionService.findLastBlockNumber();
+    public void migrate() {
+        Long startBlockNumber = blockService.findLastBlockNumber() + 1;
+        Long endBlockNumber = startBlockNumber + BLOCKS_PER_FETCH - 1;
 
-        List<BlockJpaEntity> blocks = blockService.findAllByNumberRange(lastBlockNumber, BLOCKS_PER_FETCH);
-        List<TransactionJpaEntity> trxs = transactionService.findAllByBlockNumberRange(
-                lastBlockNumberByTrx + 1, lastBlockNumber + BLOCKS_PER_FETCH);
+        List<BlockJpaEntity> blocks = blockService.findAllByNumberRange(startBlockNumber, BLOCKS_PER_FETCH);
+        List<TransactionJpaEntity> trxs = transactionService.findAllByBlockNumberRange(startBlockNumber, endBlockNumber);
 
         try {
             blockService.saveAll(blocks);
@@ -47,7 +46,7 @@ public class BlockFacadeService {
             log.error("Failed to migrate blocks and transactions", e);
 
             recoveryTaskService.save(
-                    new RecoveryTaskEntity(lastBlockNumber + 1, lastBlockNumber + BLOCKS_PER_FETCH, false, e.getMessage()));
+                    new RecoveryTaskEntity(startBlockNumber, endBlockNumber, false, e.getMessage()));
         }
     }
 }

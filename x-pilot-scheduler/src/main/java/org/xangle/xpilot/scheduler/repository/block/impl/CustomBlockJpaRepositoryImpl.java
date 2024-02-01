@@ -19,7 +19,7 @@ public class CustomBlockJpaRepositoryImpl implements CustomBlockJpaRepository {
     @Override
     public List<BlockJpaEntity> findAllByNumberAfter(Long number, int count) {
         return queryFactory.selectFrom(blockJpaEntity)
-                .where(blockJpaEntity.number.gt(number))
+                .where(blockJpaEntity.number.goe(number))
                 .orderBy(blockJpaEntity.number.asc())
                 .limit(count)
                 .fetch();
