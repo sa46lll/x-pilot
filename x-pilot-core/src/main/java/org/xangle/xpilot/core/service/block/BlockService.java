@@ -23,7 +23,8 @@ public class BlockService {
     private final MongoBlockRepository mongoBlockRepository;
 
     public PageableInfo<BlockListInfo> findAll(BlockListRequest blockListRequest) {
-        Pageable pageable = PageRequest.of(blockListRequest.page(), blockListRequest.size(), Sort.unsorted());
+        Pageable pageable = PageRequest.of(
+                blockListRequest.page(), blockListRequest.size(), Sort.sort(BlockEntity.class).by(BlockEntity::getNumber).descending());
 
         Page<BlockEntity> page = mongoBlockRepository.findAll(pageable);
 
