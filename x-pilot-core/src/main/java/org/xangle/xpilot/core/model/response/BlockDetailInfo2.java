@@ -8,7 +8,7 @@ import java.util.List;
 public record BlockDetailInfo2(
         Long blockNumber,
         String age,
-        int txCount,
+        int trxCount,
         String miner,
         List<TransactionInfo> transactions,
         PageableInfo<CommentDetailInfo> comments
