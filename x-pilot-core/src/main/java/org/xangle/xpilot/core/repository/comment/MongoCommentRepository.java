@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface MongoCommentRepository extends MongoRepository<CommentEntity, String> {
     Page<CommentEntity> findAllByBlockNumberAndDepth(Long blockNumber, Long depth, Pageable pageable);
 
-    List<CommentEntity> findAllByRootIdIn(List<String> rootIds);
-
     Optional<CommentEntity> findFirstByParentIdOrderBySequenceDesc(String parentId);
 
     Page<CommentEntity> findAllByParentId(String parentId, Pageable pageable);
+
+    List<CommentEntity> findAllByRootId(String rootId);
 }

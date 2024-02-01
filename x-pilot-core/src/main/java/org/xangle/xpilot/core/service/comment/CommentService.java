@@ -90,23 +90,20 @@ public class CommentService {
     public PageableInfo<CommentChildInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
         Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
         Page<CommentEntity> comments = mongoCommentRepository.findAllByBlockNumberAndDepth(blockNumber, 0L, pageable);
-        List<CommentEntity> replies = mongoCommentRepository.findAllByRootIdIn( // between
-                comments.stream()
-                        .map(CommentEntity::getId)
-                        .toList());
 
         List<CommentChildInfo> response = new ArrayList<>();
 
         for (CommentEntity root : comments) {
-            Map<String, CommentChildInfo> map = replies.stream()
-                    .filter(commentEntity -> commentEntity.getRootId().equals(root.getId()))
+            List<CommentEntity> replies = mongoCommentRepository.findAllByRootId(root.getId());
+
+            Map<String, CommentChildInfo> repliesMap = replies.stream()
                     .collect(Collectors.toMap(
                             commentEntity -> commentEntity.getParentId() + "_" + commentEntity.getSequence(),
                             CommentChildInfo::of
                     ));
 
             CommentChildInfo comment = CommentChildInfo.of(root);
-            comment.setReplies(map);
+            comment.setReplies(repliesMap);
             response.add(comment);
         }
 
