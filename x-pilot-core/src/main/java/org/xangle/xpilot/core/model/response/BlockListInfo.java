@@ -13,7 +13,7 @@ public record BlockListInfo(
         return new BlockListInfo(
                 block.getNumber(),
                 DateUtilService.getAge(block.getTime()),
-                block.getTransactionCount(),
+                0, // TODO: txCount
                 block.getMiner()
         );
     }

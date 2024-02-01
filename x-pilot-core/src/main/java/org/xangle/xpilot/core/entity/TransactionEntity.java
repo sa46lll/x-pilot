@@ -2,6 +2,8 @@ package org.xangle.xpilot.core.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -12,6 +14,9 @@ import java.time.Instant;
 @Getter
 @Document("transaction")
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@CompoundIndexes(
+        @CompoundIndex(name = "blockNumber_index", def = "{'blockNumber': 1}")
+)
 public class TransactionEntity {
 
     @MongoId

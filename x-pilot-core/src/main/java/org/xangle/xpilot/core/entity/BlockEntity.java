@@ -3,6 +3,7 @@ package org.xangle.xpilot.core.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -21,6 +22,7 @@ public class BlockEntity {
     private Instant time;
 
     @Field("hash")
+    @Indexed(unique = true)
     private String hash;
 
     @Field("parent_hash")
@@ -31,7 +33,4 @@ public class BlockEntity {
 
     @Field("size")
     private int size;
-
-    @Field("transaction_count")
-    private int transactionCount;
 }

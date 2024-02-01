@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -15,6 +17,9 @@ import java.time.Instant;
 @Getter
 @Document("comment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@CompoundIndexes(
+        @CompoundIndex(name = "comment_index", def = "{'block_number': 1, 'root_id': 1, 'parent_id': 1, 'depth': 1, 'sequence': 1}")
+)
 public class CommentEntity {
 
     @MongoId(FieldType.OBJECT_ID)

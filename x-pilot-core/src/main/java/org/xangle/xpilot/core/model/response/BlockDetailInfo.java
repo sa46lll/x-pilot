@@ -20,7 +20,7 @@ public record BlockDetailInfo(
         return new BlockDetailInfo(
                 block.getNumber(),
                 DateUtilService.getAge(block.getTime()),
-                block.getTransactionCount(),
+                transactions.size(),
                 block.getMiner(),
                 transactions,
                 comments
