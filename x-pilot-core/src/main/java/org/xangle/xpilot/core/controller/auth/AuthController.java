@@ -25,16 +25,33 @@ public class AuthController {
     private final AuthFacadeService authFacadeService;
     private final AccessTokenService accessTokenService;
 
+    /**
+     * 회원가입
+     *
+     * @param signupRequest
+     * @return SignupInfo
+     */
     @PostMapping("/signup")
     public SignupInfo signup(@RequestBody @Valid SignupRequest signupRequest) {
         return workerService.signup(signupRequest);
     }
 
+    /**
+     * 로그인
+     *
+     * @param loginRequest
+     * @return AccessTokenInfo
+     */
     @PostMapping("/login")
     public AccessTokenInfo login(@RequestBody @Valid LoginRequest loginRequest) {
         return authFacadeService.login(loginRequest);
     }
 
+    /**
+     * 로그아웃
+     *
+     * @param bearerToken
+     */
     @PostMapping("/logout")
     public void logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken) {
         accessTokenService.expire(bearerToken.substring(7));

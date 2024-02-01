@@ -27,27 +27,49 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentFacadeService commentFacadeService;
 
+    /**
+     * 댓글 생성
+     *
+     * @param blockNumber
+     * @param commentRequest
+     * @return CommentInfo
+     */
     @PostMapping("/{blockNumber}/comment")
     public CommentInfo save(@PathVariable Long blockNumber,
                             @RequestBody @Valid CommentRequest commentRequest) {
         return commentFacadeService.save(blockNumber, commentRequest);
     }
 
+    /**
+     * 댓글 수정
+     *
+     * @param blockNumber
+     * @param commentId
+     * @param commentUpdateRequest
+     * @return CommentInfo
+     */
     @PatchMapping("/{blockNumber}/comment/{commentId}")
     public CommentInfo update(@PathVariable Long blockNumber,
-                       @PathVariable String commentId,
-                       @RequestBody @Valid CommentUpdateRequest commentUpdateRequest) {
+                              @PathVariable String commentId,
+                              @RequestBody @Valid CommentUpdateRequest commentUpdateRequest) {
         return commentFacadeService.update(blockNumber, commentId, commentUpdateRequest);
     }
 
+    /**
+     * 댓글 삭제
+     *
+     * @param blockNumber
+     * @param commentId
+     * @return CommentInfo
+     */
     @DeleteMapping("/{blockNumber}/comment/{commentId}")
     public CommentInfo delete(@PathVariable Long blockNumber,
-                       @PathVariable String commentId) {
+                              @PathVariable String commentId) {
         return commentFacadeService.delete(blockNumber, commentId);
     }
 
     /**
-     * 대댓글 조회
+     * 대댓글 목록 조회
      *
      * @param blockNumber
      * @param commentId

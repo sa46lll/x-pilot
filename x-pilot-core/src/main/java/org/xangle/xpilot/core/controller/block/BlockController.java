@@ -23,6 +23,13 @@ public class BlockController {
     private final BlockService blockService;
     private final BlockFacadeService blockFacadeService;
 
+    /**
+     * 블록 리스트 조회
+     *
+     * @param page
+     * @param size
+     * @return PageableInfo<BlockListInfo>
+     */
     @GetMapping("/v1/block/list")
     public PageableInfo<BlockListInfo> findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                                @RequestParam(required = false, defaultValue = "5") int size) {
@@ -46,7 +53,7 @@ public class BlockController {
     }
 
     /**
-     * 블록 상세 조회 (트랜잭션 및 댓글 포함), depth 기준 페이징
+     * 블록 상세 조회 (트랜잭션 및 댓글 포함), 대댓글 기준 페이징
      *
      * @param blockNumber
      * @param page
