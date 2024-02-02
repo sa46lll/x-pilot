@@ -23,13 +23,13 @@ public class CommentChildInfo {
     boolean isDeleted;
     List<CommentChildInfo> replies;
 
-    public static CommentChildInfo of(CommentEntity comment) {
+    public static CommentChildInfo from(CommentEntity comment) {
         return new CommentChildInfo(
                 comment.getId(),
                 comment.getWorkerId(),
                 comment.getContent(),
                 comment.getCreatedTime(),
-                comment.getWorkerId().equals(ContextHandler.getWorkerId()), // NPE 방지
+                comment.getWorkerId().equals(ContextHandler.getWorkerId()),
                 comment.isDeleted(),
                 new ArrayList<>()
         );

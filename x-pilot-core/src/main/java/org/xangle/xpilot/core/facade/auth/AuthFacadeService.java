@@ -31,7 +31,7 @@ public class AuthFacadeService {
         accessTokenService.save(
                 AccessTokenEntity.from(accessToken));
 
-        return AccessTokenInfo.of(worker.getId(), worker.getEmail(), accessToken);
+        return new AccessTokenInfo(worker.getId(), worker.getEmail(), accessToken);
     }
 
     public void expire(String token) {

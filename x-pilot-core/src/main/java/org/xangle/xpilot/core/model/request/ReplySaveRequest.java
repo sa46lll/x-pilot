@@ -6,10 +6,5 @@ public record ReplySaveRequest(
         String parentId,
         String content
 ) {
-    public static ReplySaveRequest of(Long blockNumber,
-                                      String workerId,
-                                      String parentId,
-                                      String content) {
-        return new ReplySaveRequest(blockNumber, workerId, parentId, content);
-    }
+
 }

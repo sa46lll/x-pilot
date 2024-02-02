@@ -99,10 +99,10 @@ public class CommentService {
             Map<String, CommentChildInfo> repliesMap = replies.stream()
                     .collect(Collectors.toMap(
                             commentEntity -> commentEntity.getParentId() + "_" + commentEntity.getSequence(),
-                            CommentChildInfo::of
+                            CommentChildInfo::from
                     ));
 
-            CommentChildInfo comment = CommentChildInfo.of(root);
+            CommentChildInfo comment = CommentChildInfo.from(root);
             comment.setReplies(repliesMap);
             response.add(comment);
         }
@@ -133,14 +133,26 @@ public class CommentService {
         Pageable pageable = PageRequest.of(replyListRequest.page(), replyListRequest.size());
         Page<CommentEntity> comments = mongoCommentRepository.findAllByParentId(replyListRequest.commentId(), pageable);
 
+        List<CommentInfo> response = comments.stream()
+                .map(comment -> new CommentInfo(
+                        comment.getId(),
+                        comment.getRootId(),
+                        comment.getParentId(),
+                        comment.getDepth(),
+                        comment.getSequence(),
+                        comment.getContent(),
+                        comment.isDeleted(),
+                        comment.getCreatedTime(),
+                        comment.getUpdatedTime()
+                ))
+                .toList();
+
         return PageableInfo.of(
                 comments.getNumber(),
                 comments.getSize(),
                 comments.getTotalPages(),
                 comments.getTotalElements(),
-                comments.stream()
-                        .map(CommentInfo::from)
-                        .toList());
+                response);
     }
 
     // TODO: Remove this method (더미 데이터를 위한 메서드)

@@ -6,7 +6,4 @@ public record AccessTokenInfo(
         String accessToken
 ) {
 
-    public static AccessTokenInfo of(String workerId, String email, String accessToken) {
-        return new AccessTokenInfo(workerId, email, accessToken);
-    }
 }

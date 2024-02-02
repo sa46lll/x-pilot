@@ -28,7 +28,11 @@ public class WorkerService {
 
         mongoWorkerRepository.save(worker);
 
-        return SignupInfo.from(worker);
+        return new SignupInfo(
+                worker.getId(),
+                worker.getEmail(),
+                worker.getName()
+        );
     }
 
     public WorkerEntity getByEmailAndPassword(String email, String password) {

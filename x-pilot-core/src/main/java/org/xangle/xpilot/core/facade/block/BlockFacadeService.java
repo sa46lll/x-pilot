@@ -13,6 +13,7 @@ import org.xangle.xpilot.core.model.response.CommentChildInfo;
 import org.xangle.xpilot.core.model.response.CommentDetailInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.model.response.TransactionInfo;
+import org.xangle.xpilot.core.service.DateUtilService;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
 import org.xangle.xpilot.core.service.transaction.TransactionService;
@@ -40,7 +41,14 @@ public class BlockFacadeService {
                 .map(TransactionInfo::from)
                 .toList();
 
-        return BlockDetailInfo.of(block, transactionInfo, comments);
+        return new BlockDetailInfo(
+                block.getNumber(),
+                DateUtilService.getAge(block.getTime()),
+                transactionInfo.size(),
+                block.getMiner(),
+                transactionInfo,
+                comments
+        );
     }
 
     public BlockSummaryDetailInfo getSummaryByBlockNumber(BlockDetailRequest blockDetailRequest) {
@@ -52,6 +60,13 @@ public class BlockFacadeService {
                 .map(TransactionInfo::from)
                 .toList();
 
-        return BlockSummaryDetailInfo.of(block, transactionInfo, comments);
+        return new BlockSummaryDetailInfo(
+                block.getNumber(),
+                DateUtilService.getAge(block.getTime()),
+                transactionInfo.size(),
+                block.getMiner(),
+                transactionInfo,
+                comments
+        );
     }
 }

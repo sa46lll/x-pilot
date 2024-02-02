@@ -1,16 +1,16 @@
 
 ### {{POST}} `v1/block/{blockNumber}/comment`
-POST {{apiAddress}}/v1/block/482/comment
+POST {{apiAddress}}/v1/block/450/comment
 Authorization: Bearer {{authorization}}
 Content-Type: application/json
 
 {
   "parentId": "",
-  "content": "root"
+  "content": "root content"
 }
 
 ### {{PATCH}} `v1/block/{blockNumber}/comment/{commentId}`
-PATCH {{apiAddress}}/v1/block/482/comment/65ba4701299c28757d467027
+PATCH {{apiAddress}}/v1/block/450/comment/65bc505071dca24500ad66e9
 Authorization: Bearer {{authorization}}
 Content-Type: application/json
 
@@ -19,11 +19,11 @@ Content-Type: application/json
 }
 
 ### {{DELETE}} `v1/block/{blockNumber}/comment/{commentId}`
-DELETE {{apiAddress}}/v1/block/482/comment/65ba4701299c28757d467027
+DELETE {{apiAddress}}/v1/block/450/comment/65bc505071dca24500ad66e9
 Authorization: Bearer {{authorization}}
 Content-Type: application/json
 
 ### {{GET}} `v1/block/{blockNumber}/comment/{commentId}/reply`
-GET {{apiAddress}}/v1/block/482/comment/65ba4701299c28757d467027/reply?page=0&size=5
+GET {{apiAddress}}/v1/block/450/comment/65bc4fa271dca24500ad66e8/reply?page=0&size=5
 Authorization: Bearer {{authorization}}
 Content-Type: application/json

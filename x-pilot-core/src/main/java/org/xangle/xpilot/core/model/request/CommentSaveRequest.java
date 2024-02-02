@@ -5,10 +5,5 @@ public record CommentSaveRequest(
         String workerId,
         String content
 ) {
-    public static CommentSaveRequest of(Long blockNumber,
-                                        String workerId,
-                                        String content) {
-        return new CommentSaveRequest(blockNumber, workerId, content);
-    }
 
 }

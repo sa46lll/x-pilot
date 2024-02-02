@@ -35,10 +35,20 @@ public class CommentFacadeService {
         boolean isRoot = commentRequest.parentId().isBlank();
 
         CommentEntity comment = isRoot ?
-                commentService.addComment(CommentSaveRequest.of(block.getNumber(), workerId, commentRequest.content())) :
-                commentService.addReply(ReplySaveRequest.of(block.getNumber(), workerId, commentRequest.parentId(), commentRequest.content()));
+                commentService.addComment(new CommentSaveRequest(block.getNumber(),workerId, commentRequest.content())) :
+                commentService.addReply(new ReplySaveRequest(block.getNumber(), workerId, commentRequest.parentId(), commentRequest.content()));
 
-        return CommentInfo.from(comment);
+        return new CommentInfo(
+                comment.getId(),
+                comment.getRootId(),
+                comment.getParentId(),
+                comment.getDepth(),
+                comment.getSequence(),
+                comment.getContent(),
+                comment.isDeleted(),
+                comment.getCreatedTime(),
+                comment.getUpdatedTime()
+        );
     }
 
     public CommentInfo update(Long blockNumber, String commentId, CommentUpdateRequest commentUpdateRequest) {
@@ -47,7 +57,17 @@ public class CommentFacadeService {
 
         CommentEntity updatedComment = commentService.update(comment, commentUpdateRequest.content());
 
-        return CommentInfo.from(updatedComment);
+        return new CommentInfo(
+                updatedComment.getId(),
+                updatedComment.getRootId(),
+                updatedComment.getParentId(),
+                updatedComment.getDepth(),
+                updatedComment.getSequence(),
+                updatedComment.getContent(),
+                updatedComment.isDeleted(),
+                updatedComment.getCreatedTime(),
+                updatedComment.getUpdatedTime()
+        );
     }
 
     public CommentInfo delete(Long blockNumber, String commentId) {
@@ -56,7 +76,17 @@ public class CommentFacadeService {
 
         CommentEntity updatedComment = commentService.delete(comment);
 
-        return CommentInfo.from(updatedComment);
+        return new CommentInfo(
+                updatedComment.getId(),
+                updatedComment.getRootId(),
+                updatedComment.getParentId(),
+                updatedComment.getDepth(),
+                updatedComment.getSequence(),
+                updatedComment.getContent(),
+                updatedComment.isDeleted(),
+                updatedComment.getCreatedTime(),
+                updatedComment.getUpdatedTime()
+        );
     }
 
     private void validate(CommentEntity comment, String workerId, Long blockNumber) {
