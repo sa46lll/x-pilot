@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecoveryTaskFacadeService {
 
-    private static final int TASKS_PER_FETCH = 100;
+    private static final int TASKS_PER_FETCH = 5;
     private static final int RETRY_COUNT = 3;
 
     private final TransactionService transactionService;
@@ -45,7 +45,9 @@ public class RecoveryTaskFacadeService {
                         .filter(trx -> !savedIds.contains(ByteConverterService.convertToString(trx.getHash())))
                         .toList();
 
-                transactionService.saveAll(unSavedTrxs);
+                if (!unSavedTrxs.isEmpty()) {
+                    transactionService.saveAll(unSavedTrxs);
+                }
 
                 task.complete();
                 recoveryTaskService.save(task);

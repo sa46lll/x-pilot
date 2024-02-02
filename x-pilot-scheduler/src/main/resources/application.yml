@@ -2,6 +2,8 @@ server:
   shutdown: graceful
 
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
   datasource:
 #    url: jdbc:postgresql://localhost:5432/xpilot
 #    username: root
