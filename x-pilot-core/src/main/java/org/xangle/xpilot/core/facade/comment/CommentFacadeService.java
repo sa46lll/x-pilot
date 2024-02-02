@@ -9,10 +9,12 @@ import org.xangle.xpilot.core.exception.ErrorTypeException;
 import org.xangle.xpilot.core.model.request.CommentDummyRequest;
 import org.xangle.xpilot.core.model.request.CommentRequest;
 import org.xangle.xpilot.core.model.request.CommentSaveRequest;
+import org.xangle.xpilot.core.model.request.ReplyListRequest;
 import org.xangle.xpilot.core.model.request.ReplySaveRequest;
 import org.xangle.xpilot.core.model.ContextHandler;
 import org.xangle.xpilot.core.model.request.CommentUpdateRequest;
 import org.xangle.xpilot.core.model.response.CommentInfo;
+import org.xangle.xpilot.core.model.response.PageableInfo;
 import org.xangle.xpilot.core.service.DateUtilService;
 import org.xangle.xpilot.core.service.block.BlockService;
 import org.xangle.xpilot.core.service.comment.CommentService;
@@ -79,5 +81,9 @@ public class CommentFacadeService {
                 ).toList();
 
         commentService.addAllReplies(comments);
+    }
+
+    public PageableInfo<CommentInfo> findAllByParentId(ReplyListRequest replyListRequest) {
+        return commentService.findAllByParentId(replyListRequest);
     }
 }

@@ -13,17 +13,13 @@ import org.xangle.xpilot.core.model.request.LoginRequest;
 import org.xangle.xpilot.core.model.request.SignupRequest;
 import org.xangle.xpilot.core.model.response.AccessTokenInfo;
 import org.xangle.xpilot.core.model.response.SignupInfo;
-import org.xangle.xpilot.core.service.worker.WorkerService;
-import org.xangle.xpilot.core.service.token.AccessTokenService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/auth")
 public class AuthController {
 
-    private final WorkerService workerService;
     private final AuthFacadeService authFacadeService;
-    private final AccessTokenService accessTokenService;
 
     /**
      * 회원가입
@@ -33,7 +29,7 @@ public class AuthController {
      */
     @PostMapping("/signup")
     public SignupInfo signup(@RequestBody @Valid SignupRequest signupRequest) {
-        return workerService.signup(signupRequest);
+        return authFacadeService.signup(signupRequest);
     }
 
     /**
@@ -54,6 +50,6 @@ public class AuthController {
      */
     @PostMapping("/logout")
     public void logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken) {
-        accessTokenService.expire(bearerToken.substring(7));
+        authFacadeService.expire(bearerToken.substring(7));
     }
 }

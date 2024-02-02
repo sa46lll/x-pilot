@@ -13,14 +13,12 @@ import org.xangle.xpilot.core.model.response.BlockDetailInfo;
 import org.xangle.xpilot.core.model.response.BlockDetailInfo2;
 import org.xangle.xpilot.core.model.response.BlockListInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
-import org.xangle.xpilot.core.service.block.BlockService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
 public class BlockController {
 
-    private final BlockService blockService;
     private final BlockFacadeService blockFacadeService;
 
     /**
@@ -33,7 +31,7 @@ public class BlockController {
     @GetMapping("/v1/block/list")
     public PageableInfo<BlockListInfo> findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                                @RequestParam(required = false, defaultValue = "5") int size) {
-        return blockService.findAll(new BlockListRequest(page, size));
+        return blockFacadeService.findAll(new BlockListRequest(page, size));
     }
 
     /**

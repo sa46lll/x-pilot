@@ -18,4 +18,8 @@ public class ContextHandler {
     public static String getWorkerId() {
         return WORKER_INFO.get().workerId;
     }
+
+    public static void clear() {
+        WORKER_INFO.remove();
+    }
 }

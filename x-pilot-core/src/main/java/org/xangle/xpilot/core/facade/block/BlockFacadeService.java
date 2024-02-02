@@ -5,8 +5,10 @@ import org.xangle.xpilot.core.aspect.annotation.Facade;
 import org.xangle.xpilot.core.entity.BlockEntity;
 import org.xangle.xpilot.core.entity.TransactionEntity;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
+import org.xangle.xpilot.core.model.request.BlockListRequest;
 import org.xangle.xpilot.core.model.response.BlockDetailInfo;
 import org.xangle.xpilot.core.model.response.BlockDetailInfo2;
+import org.xangle.xpilot.core.model.response.BlockListInfo;
 import org.xangle.xpilot.core.model.response.CommentChildInfo;
 import org.xangle.xpilot.core.model.response.CommentDetailInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
@@ -25,8 +27,12 @@ public class BlockFacadeService {
     private final CommentService commentService;
     private final TransactionService transactionService;
 
+    public PageableInfo<BlockListInfo> findAll(BlockListRequest blockListRequest) {
+        return blockService.findAll(blockListRequest);
+    }
+    
     public BlockDetailInfo findByBlockNumber(BlockDetailRequest blockDetailRequest) {
-        BlockEntity block = blockService.findByNumber(blockDetailRequest.blockNumber());
+        BlockEntity block = blockService.findByNumber(blockDetailRequest.blockNumber()); // BlockInfo
         List<TransactionEntity> transactions = transactionService.findAllByBlockNumber(block.getNumber());
         PageableInfo<CommentChildInfo> comments = commentService.findAllByBlockNumber(block.getNumber(), blockDetailRequest);
 

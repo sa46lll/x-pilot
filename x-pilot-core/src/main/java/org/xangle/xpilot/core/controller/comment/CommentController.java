@@ -17,14 +17,12 @@ import org.xangle.xpilot.core.model.request.CommentUpdateRequest;
 import org.xangle.xpilot.core.model.request.ReplyListRequest;
 import org.xangle.xpilot.core.model.response.CommentInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
-import org.xangle.xpilot.core.service.comment.CommentService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/block")
 public class CommentController {
 
-    private final CommentService commentService;
     private final CommentFacadeService commentFacadeService;
 
     /**
@@ -82,7 +80,7 @@ public class CommentController {
                                                 @PathVariable String commentId,
                                                 @RequestParam(required = false, defaultValue = "1") int page,
                                                 @RequestParam(required = false, defaultValue = "5") int size) {
-        return commentService.findAllByParentId(
+        return commentFacadeService.findAllByParentId(
                 new ReplyListRequest(blockNumber, commentId, page, size));
     }
 }
