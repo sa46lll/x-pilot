@@ -11,6 +11,7 @@ public enum CustomErrorType implements ErrorType {
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND),
     BLOCK_NOT_FOUND(HttpStatus.NOT_FOUND),
+    EMAIL_ALREADY_EXISTS(HttpStatus.NOT_FOUND)
     ;
 
     private final HttpStatus httpStatus;

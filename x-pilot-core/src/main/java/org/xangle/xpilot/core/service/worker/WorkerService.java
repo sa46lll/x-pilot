@@ -20,7 +20,7 @@ public class WorkerService {
 
     public SignupInfo signup(SignupRequest signupRequest) {
         if (mongoWorkerRepository.existsWorkerEntityByEmail(signupRequest.email())) {
-            throw new ErrorTypeException("이미 존재하는 이메일입니다.", CustomErrorType.SERVER_ERROR);
+            throw new ErrorTypeException("이미 존재하는 이메일입니다.", CustomErrorType.EMAIL_ALREADY_EXISTS);
         }
 
         WorkerEntity worker = WorkerEntityMapper.toEntity(signupRequest);
@@ -38,7 +38,7 @@ public class WorkerService {
     public WorkerEntity getByEmailAndPassword(String email, String password) {
         return mongoWorkerRepository.findByEmail(email)
                 .filter(worker -> isPasswordCorrect(password, worker.getPassword()))
-                .orElseThrow(() -> new ErrorTypeException("이메일 또는 비밀번호가 일치하지 않습니다.", CustomErrorType.SERVER_ERROR));
+                .orElseThrow(() -> new ErrorTypeException("이메일 또는 비밀번호가 일치하지 않습니다.", CustomErrorType.UNAUTHORIZED));
     }
 
     private boolean isPasswordCorrect(String rawPassword, String encodedPassword) {
