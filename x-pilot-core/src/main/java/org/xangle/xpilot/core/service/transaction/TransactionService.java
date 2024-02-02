@@ -13,7 +13,7 @@ public class TransactionService {
 
     private final MongoTransactionRepository mongoTransactionRepository;
 
-    public List<TransactionEntity> findAllByBlockNumber(Long blockNumber) {
+    public List<TransactionEntity> getAllByBlockNumber(Long blockNumber) {
         return mongoTransactionRepository.findAllByBlockNumber(blockNumber);
     }
 }

@@ -7,7 +7,7 @@ import org.xangle.xpilot.core.entity.TransactionEntity;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
 import org.xangle.xpilot.core.model.request.BlockListRequest;
 import org.xangle.xpilot.core.model.response.BlockDetailInfo;
-import org.xangle.xpilot.core.model.response.BlockDetailInfo2;
+import org.xangle.xpilot.core.model.response.BlockSummaryDetailInfo;
 import org.xangle.xpilot.core.model.response.BlockListInfo;
 import org.xangle.xpilot.core.model.response.CommentChildInfo;
 import org.xangle.xpilot.core.model.response.CommentDetailInfo;
@@ -27,14 +27,14 @@ public class BlockFacadeService {
     private final CommentService commentService;
     private final TransactionService transactionService;
 
-    public PageableInfo<BlockListInfo> findAll(BlockListRequest blockListRequest) {
-        return blockService.findAll(blockListRequest);
+    public PageableInfo<BlockListInfo> getAll(BlockListRequest blockListRequest) {
+        return blockService.getAll(blockListRequest);
     }
-    
-    public BlockDetailInfo findByBlockNumber(BlockDetailRequest blockDetailRequest) {
-        BlockEntity block = blockService.findByNumber(blockDetailRequest.blockNumber()); // BlockInfo
-        List<TransactionEntity> transactions = transactionService.findAllByBlockNumber(block.getNumber());
-        PageableInfo<CommentChildInfo> comments = commentService.findAllByBlockNumber(block.getNumber(), blockDetailRequest);
+
+    public BlockDetailInfo getByBlockNumber(BlockDetailRequest blockDetailRequest) {
+        BlockEntity block = blockService.getByNumber(blockDetailRequest.blockNumber());
+        List<TransactionEntity> transactions = transactionService.getAllByBlockNumber(block.getNumber());
+        PageableInfo<CommentChildInfo> comments = commentService.getAllByBlockNumber(block.getNumber(), blockDetailRequest);
 
         List<TransactionInfo> transactionInfo = transactions.stream()
                 .map(TransactionInfo::from)
@@ -43,15 +43,15 @@ public class BlockFacadeService {
         return BlockDetailInfo.of(block, transactionInfo, comments);
     }
 
-    public BlockDetailInfo2 findSummaryByBlockNumber(BlockDetailRequest blockDetailRequest) {
-        BlockEntity block = blockService.findByNumber(blockDetailRequest.blockNumber());
-        List<TransactionEntity> transactions = transactionService.findAllByBlockNumber(block.getNumber());
-        PageableInfo<CommentDetailInfo> comments = commentService.findRootCommentsByBlockNumber(blockDetailRequest);
+    public BlockSummaryDetailInfo getSummaryByBlockNumber(BlockDetailRequest blockDetailRequest) {
+        BlockEntity block = blockService.getByNumber(blockDetailRequest.blockNumber());
+        List<TransactionEntity> transactions = transactionService.getAllByBlockNumber(block.getNumber());
+        PageableInfo<CommentDetailInfo> comments = commentService.getRootCommentsByBlockNumber(blockDetailRequest);
 
         List<TransactionInfo> transactionInfo = transactions.stream()
                 .map(TransactionInfo::from)
                 .toList();
 
-        return BlockDetailInfo2.of(block, transactionInfo, comments);
+        return BlockSummaryDetailInfo.of(block, transactionInfo, comments);
     }
 }

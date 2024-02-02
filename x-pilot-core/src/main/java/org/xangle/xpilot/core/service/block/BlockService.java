@@ -30,7 +30,7 @@ public class BlockService {
     private final MongoBlockRepository mongoBlockRepository;
     private final MongoTransactionRepository mongoTransactionRepository;
 
-    public PageableInfo<BlockListInfo> findAll(BlockListRequest blockListRequest) {
+    public PageableInfo<BlockListInfo> getAll(BlockListRequest blockListRequest) {
         Pageable pageable = PageRequest.of(
                 blockListRequest.page(), blockListRequest.size(), Sort.sort(BlockEntity.class).by(BlockEntity::getNumber).descending());
 
@@ -62,7 +62,7 @@ public class BlockService {
         );
     }
 
-    public BlockEntity findByNumber(Long number) {
+    public BlockEntity getByNumber(Long number) {
         return mongoBlockRepository.findByNumber(number)
                 .orElseThrow(() -> new ErrorTypeException("해당 블록이 존재하지 않습니다.", CustomErrorType.BLOCK_NOT_FOUND));
     }

@@ -5,7 +5,7 @@ import org.xangle.xpilot.core.service.DateUtilService;
 
 import java.util.List;
 
-public record BlockDetailInfo2(
+public record BlockSummaryDetailInfo(
         Long blockNumber,
         String age,
         int trxCount,
@@ -14,10 +14,10 @@ public record BlockDetailInfo2(
         PageableInfo<CommentDetailInfo> comments
 ) {
 
-    public static BlockDetailInfo2 of(BlockEntity block,
-                                      List<TransactionInfo> transactions,
-                                      PageableInfo<CommentDetailInfo> comments) {
-        return new BlockDetailInfo2(
+    public static BlockSummaryDetailInfo of(BlockEntity block,
+                                            List<TransactionInfo> transactions,
+                                            PageableInfo<CommentDetailInfo> comments) {
+        return new BlockSummaryDetailInfo(
                 block.getNumber(),
                 DateUtilService.getAge(block.getTime()),
                 transactions.size(),

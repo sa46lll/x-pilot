@@ -25,7 +25,7 @@ public class AuthFacadeService {
     }
 
     public AccessTokenInfo login(LoginRequest loginRequest) {
-        WorkerEntity worker = workerService.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
+        WorkerEntity worker = workerService.getByEmailAndPassword(loginRequest.email(), loginRequest.password());
         String accessToken = tokenProvider.createToken(loginRequest.email(), worker.getId());
 
         accessTokenService.save(

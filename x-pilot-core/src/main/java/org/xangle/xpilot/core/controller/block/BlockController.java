@@ -10,7 +10,7 @@ import org.xangle.xpilot.core.facade.block.BlockFacadeService;
 import org.xangle.xpilot.core.model.request.BlockDetailRequest;
 import org.xangle.xpilot.core.model.request.BlockListRequest;
 import org.xangle.xpilot.core.model.response.BlockDetailInfo;
-import org.xangle.xpilot.core.model.response.BlockDetailInfo2;
+import org.xangle.xpilot.core.model.response.BlockSummaryDetailInfo;
 import org.xangle.xpilot.core.model.response.BlockListInfo;
 import org.xangle.xpilot.core.model.response.PageableInfo;
 
@@ -31,7 +31,7 @@ public class BlockController {
     @GetMapping("/v1/block/list")
     public PageableInfo<BlockListInfo> findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                                @RequestParam(required = false, defaultValue = "5") int size) {
-        return blockFacadeService.findAll(new BlockListRequest(page, size));
+        return blockFacadeService.getAll(new BlockListRequest(page, size));
     }
 
     /**
@@ -43,10 +43,10 @@ public class BlockController {
      * @return BlockDetailInfo
      */
     @GetMapping("/v1/block/{blockNumber}")
-    public BlockDetailInfo findByBlockNumber(@PathVariable Long blockNumber,
-                                             @RequestParam(required = false, defaultValue = "1") int page,
-                                             @RequestParam(required = false, defaultValue = "5") int size) {
-        return blockFacadeService.findByBlockNumber(
+    public BlockDetailInfo getByBlockNumber(@PathVariable Long blockNumber,
+                                            @RequestParam(required = false, defaultValue = "1") int page,
+                                            @RequestParam(required = false, defaultValue = "5") int size) {
+        return blockFacadeService.getByBlockNumber(
                 new BlockDetailRequest(blockNumber, page, size));
     }
 
@@ -56,13 +56,13 @@ public class BlockController {
      * @param blockNumber
      * @param page
      * @param size
-     * @return BlockDetailInfo
+     * @return BlockSummaryDetailInfo
      */
     @GetMapping("/v2/block/{blockNumber}")
-    public BlockDetailInfo2 findByBlockNumber2(@PathVariable Long blockNumber,
-                                               @RequestParam(required = false, defaultValue = "1") int page,
-                                               @RequestParam(required = false, defaultValue = "5") int size) {
-        return blockFacadeService.findSummaryByBlockNumber(
+    public BlockSummaryDetailInfo getSummaryByBlockNumber(@PathVariable Long blockNumber,
+                                                          @RequestParam(required = false, defaultValue = "1") int page,
+                                                          @RequestParam(required = false, defaultValue = "5") int size) {
+        return blockFacadeService.getSummaryByBlockNumber(
                 new BlockDetailRequest(blockNumber, page, size));
     }
 }

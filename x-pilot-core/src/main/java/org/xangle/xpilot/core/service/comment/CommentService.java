@@ -87,7 +87,7 @@ public class CommentService {
         return comment;
     }
 
-    public PageableInfo<CommentChildInfo> findAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
+    public PageableInfo<CommentChildInfo> getAllByBlockNumber(Long blockNumber, BlockDetailRequest blockDetailRequest) {
         Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
         Page<CommentEntity> comments = mongoCommentRepository.findAllByBlockNumberAndDepth(blockNumber, 0L, pageable);
 
@@ -115,7 +115,7 @@ public class CommentService {
                 response);
     }
 
-    public PageableInfo<CommentDetailInfo> findRootCommentsByBlockNumber(BlockDetailRequest blockDetailRequest) {
+    public PageableInfo<CommentDetailInfo> getRootCommentsByBlockNumber(BlockDetailRequest blockDetailRequest) {
         Pageable pageable = PageRequest.of(blockDetailRequest.page(), blockDetailRequest.size());
         Page<CommentEntity> comments = mongoCommentRepository.findAllByBlockNumberAndDepth(blockDetailRequest.blockNumber(), 0L, pageable);
 
@@ -129,7 +129,7 @@ public class CommentService {
                         .toList());
     }
 
-    public PageableInfo<CommentInfo> findAllByParentId(ReplyListRequest replyListRequest) {
+    public PageableInfo<CommentInfo> getAllByParentId(ReplyListRequest replyListRequest) {
         Pageable pageable = PageRequest.of(replyListRequest.page(), replyListRequest.size());
         Page<CommentEntity> comments = mongoCommentRepository.findAllByParentId(replyListRequest.commentId(), pageable);
 

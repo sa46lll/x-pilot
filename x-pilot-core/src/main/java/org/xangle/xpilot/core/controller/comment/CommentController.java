@@ -80,7 +80,7 @@ public class CommentController {
                                                 @PathVariable String commentId,
                                                 @RequestParam(required = false, defaultValue = "1") int page,
                                                 @RequestParam(required = false, defaultValue = "5") int size) {
-        return commentFacadeService.findAllByParentId(
+        return commentFacadeService.getAllByParentId(
                 new ReplyListRequest(blockNumber, commentId, page, size));
     }
 }

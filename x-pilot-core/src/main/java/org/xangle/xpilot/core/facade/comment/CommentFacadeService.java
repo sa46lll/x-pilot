@@ -30,7 +30,7 @@ public class CommentFacadeService {
     private final CommentService commentService;
 
     public CommentInfo save(Long blockNumber, CommentRequest commentRequest) {
-        BlockEntity block = blockService.findByNumber(blockNumber);
+        BlockEntity block = blockService.getByNumber(blockNumber);
         String workerId = ContextHandler.getWorkerId();
         boolean isRoot = commentRequest.parentId().isBlank();
 
@@ -65,6 +65,10 @@ public class CommentFacadeService {
         }
     }
 
+    public PageableInfo<CommentInfo> getAllByParentId(ReplyListRequest replyListRequest) {
+        return commentService.getAllByParentId(replyListRequest);
+    }
+
     // TODO: Remove this method (더미 데이터를 위한 메서드)
     public void saveAllDummy(Long blockNumber, List<CommentDummyRequest> requests) {
         List<CommentEntity> comments = requests.stream().
@@ -81,9 +85,5 @@ public class CommentFacadeService {
                 ).toList();
 
         commentService.addAllReplies(comments);
-    }
-
-    public PageableInfo<CommentInfo> findAllByParentId(ReplyListRequest replyListRequest) {
-        return commentService.findAllByParentId(replyListRequest);
     }
 }

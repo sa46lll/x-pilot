@@ -31,7 +31,7 @@ public class WorkerService {
         return SignupInfo.from(worker);
     }
 
-    public WorkerEntity findByEmailAndPassword(String email, String password) {
+    public WorkerEntity getByEmailAndPassword(String email, String password) {
         return mongoWorkerRepository.findByEmail(email)
                 .filter(worker -> isPasswordCorrect(password, worker.getPassword()))
                 .orElseThrow(() -> new ErrorTypeException("이메일 또는 비밀번호가 일치하지 않습니다.", CustomErrorType.SERVER_ERROR));
